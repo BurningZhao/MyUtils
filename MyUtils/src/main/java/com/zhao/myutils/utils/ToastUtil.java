@@ -7,7 +7,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 /**
- * Description: Toast工具
+ * Description: Toast工具,在子线程使用
  */
 public class ToastUtil {
     static Handler mHandler;
@@ -34,19 +34,5 @@ public class ToastUtil {
                 toast.show();
             }
         });
-    }
-
-    /**
-     * 弹出toast,可以设置时长
-     */
-    public static void showToast(Context context, int resId, int duration) {
-        Toast.makeText(context, resId, duration).show();
-    }
-
-    /**
-     * 弹出toast,可以设置时长
-     */
-    public static void showToast(Context context, String msg, int duration) {
-        Toast.makeText(context, msg, duration).show();
     }
 }
