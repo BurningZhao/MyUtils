@@ -14,7 +14,6 @@ public class StringUtil {
         return (str == null || str.trim().length() == 0);
     }
 
-
     /**
      * 使用utf-8转码
      */
@@ -43,6 +42,5 @@ public class StringUtil {
         }
         return str;
     }
-
 
 }
