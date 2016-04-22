@@ -2,7 +2,10 @@ package com.zhao.myutils.utils;
 
 import java.io.UnsupportedEncodingException;
 
-public class Base64 {
+/**
+ * 使用base64加解密字符串
+ */
+public class MyBase64 {
     private static char[] base64EncodeChars = new char[]{
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
             'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
