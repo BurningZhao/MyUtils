@@ -11,21 +11,21 @@ import java.util.Stack;
 /**
  * activity 管理类
  */
-public class AppManager {
+public class ActivityManager {
 
     private static Stack<Activity> activityStack;
-    private static AppManager instance;
+    private static ActivityManager instance;
 
-    private AppManager() {
+    private ActivityManager() {
         activityStack = new Stack<>();
     }
 
     /**
      * 单一实例
      */
-    public static AppManager getAppManager() {
+    public static ActivityManager getAppManager() {
         if (instance == null) {
-            instance = new AppManager();
+            instance = new ActivityManager();
         }
         return instance;
     }
