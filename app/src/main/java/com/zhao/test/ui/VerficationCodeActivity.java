@@ -1,7 +1,6 @@
 package com.zhao.test.ui;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -12,45 +11,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhao.myutils.base.BaseActivity;
+import com.zhao.myutils.utils.BitmapUtils;
 import com.zhao.test.R;
 
 import java.util.Random;
 
 /**
- * 验证码工具类
+ * 验证码类
  */
 public class VerficationCodeActivity extends BaseActivity {
-
-    private String numStrTmp = "";
-    private String numStr = "";
+    // 数字类型验证码
     private int[] numArray = new int[4];
     private int[] colorArray = new int[6];
+    private String numStr;
 
     private TextView tvHideA;
     private TextView tvHideB;
     private TextView tvHideC;
     private TextView tvHideD;
-    private TextView tvHideE;
-    private TextView tvHideF;
-    private TextView tvHideG;
     private ImageView ivNumA;
     private ImageView ivNumB;
     private ImageView ivNumC;
     private ImageView ivNumD;
-    private ImageView ivNumE;
-    private ImageView ivNumF;
-    private ImageView ivNumG;
     private Button btnCheck;
     private TextView tvCheck;
     private EditText etCheck;
 
     // 计算类型的验证码
-    private String[] strVerify = new String[3];
-    private int[] intVerify = new int[3];
-    private int intResult = -100;
+    private TextView tvHideE;
+    private TextView tvHideF;
+    private TextView tvHideG;
+    private ImageView ivNumE;
+    private ImageView ivNumF;
+    private ImageView ivNumG;
     private EditText etVerify;
     private Button btnVerify;
     private TextView tvVerify;
+
+    private String[] strVerify = new String[3];
+    private int[] intVerify = new int[3];
+    private int intResult = -100;
 
     @Override
     public int setLayoutResId() {
@@ -59,7 +59,7 @@ public class VerficationCodeActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle bundle) {
-
+        // 数字类型的验证码
         tvHideA = (TextView) findViewById(R.id.tvHideA);
         tvHideB = (TextView) findViewById(R.id.tvHideB);
         tvHideC = (TextView) findViewById(R.id.tvHideC);
@@ -68,6 +68,10 @@ public class VerficationCodeActivity extends BaseActivity {
         ivNumB = (ImageView) findViewById(R.id.ivNumB);
         ivNumC = (ImageView) findViewById(R.id.ivNumC);
         ivNumD = (ImageView) findViewById(R.id.ivNumD);
+
+        btnCheck = (Button) findViewById(R.id.btnCheck);
+        etCheck = (EditText) findViewById(R.id.etCheck);
+        tvCheck = (TextView) findViewById(R.id.tvCheck);
         // 计算类型的验证码
         tvHideE = (TextView) findViewById(R.id.tvHideE);
         tvHideF = (TextView) findViewById(R.id.tvHideF);
@@ -76,13 +80,9 @@ public class VerficationCodeActivity extends BaseActivity {
         ivNumF = (ImageView) findViewById(R.id.ivNumF);
         ivNumG = (ImageView) findViewById(R.id.ivNumG);
 
-        etVerify = (EditText) findViewById(R.id.etVerify);
         btnVerify = (Button) findViewById(R.id.btnVerify);
+        etVerify = (EditText) findViewById(R.id.etVerify);
         tvVerify = (TextView) findViewById(R.id.tvVerify);
-
-        tvCheck = (TextView) findViewById(R.id.tvCheck);
-        etCheck = (EditText) findViewById(R.id.etCheck);
-        btnCheck = (Button) findViewById(R.id.btnCheck);
     }
 
     @Override
@@ -113,21 +113,24 @@ public class VerficationCodeActivity extends BaseActivity {
         Matrix matrixE = new Matrix();
         matrixE.reset();
         matrixE.setRotate(randomAngle());
-        Bitmap bmNumE = Bitmap.createBitmap(getBitmapFromView(tvHideE, 210, 180), 0, 0, 210, 180, matrixE, true);
+        Bitmap bmNumE = Bitmap.createBitmap(BitmapUtils.getBitmapFromView(
+                tvHideE, 210, 180), 0, 0, 210, 180, matrixE, true);
         ivNumE.setImageBitmap(bmNumE);
 
         //Operator
         Matrix matrixF = new Matrix();
         matrixF.reset();
         matrixF.setRotate(randomAngle());
-        Bitmap bmNumF = Bitmap.createBitmap(getBitmapFromView(tvHideF, 210, 180), 0, 0, 210, 180, matrixF, true);
+        Bitmap bmNumF = Bitmap.createBitmap(BitmapUtils.getBitmapFromView(
+                tvHideF, 210, 180), 0, 0, 210, 180, matrixF, true);
         ivNumF.setImageBitmap(bmNumF);
 
         // Num2
         Matrix matrixG = new Matrix();
         matrixG.reset();
         matrixG.setRotate(randomAngle());
-        Bitmap bmNumG = Bitmap.createBitmap(getBitmapFromView(tvHideG, 210, 180), 0, 0, 210, 180, matrixG, true);
+        Bitmap bmNumG = Bitmap.createBitmap(BitmapUtils.getBitmapFromView(
+                tvHideG, 210, 180), 0, 0, 210, 180, matrixG, true);
         ivNumG.setImageBitmap(bmNumG);
     }
 
@@ -193,6 +196,7 @@ public class VerficationCodeActivity extends BaseActivity {
                     tvCheck.setText("输入正确");
                     tvCheck.setTextColor(Color.GREEN);
                 } else {
+                    setNum();
                     tvCheck.setText("输入错误");
                     tvCheck.setTextColor(Color.RED);
                 }
@@ -207,6 +211,7 @@ public class VerficationCodeActivity extends BaseActivity {
                     tvVerify.setText("正确");
                     tvVerify.setTextColor(Color.GREEN);
                 } else {
+                    setVerify();
                     tvVerify.setText("错误");
                     tvVerify.setTextColor(Color.RED);
                 }
@@ -217,9 +222,12 @@ public class VerficationCodeActivity extends BaseActivity {
         }
     }
 
-    public void initNum() {
+    /**
+     * 初始化随机数组
+     */
+    public void initNumArray() {
         numStr = "";
-        numStrTmp = "";
+        String numStrTmp;
         for (int i = 0; i < numArray.length; i++) {
             int numIntTmp = new Random().nextInt(10);
             numStrTmp = String.valueOf(numIntTmp);
@@ -228,48 +236,58 @@ public class VerficationCodeActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 生成数字验证码图片
+     */
     public void setNum() {
-        initNum();
-        tvHideA.setText("" + numArray[0]);
+        initNumArray();
+        tvHideA.setText(String.valueOf(numArray[0]));
         tvHideA.setTextColor(randomColor());
-        tvHideB.setText("" + numArray[1]);
+        tvHideB.setText(String.valueOf(numArray[1]));
         tvHideB.setTextColor(randomColor());
-        tvHideC.setText("" + numArray[2]);
+        tvHideC.setText(String.valueOf(numArray[2]));
         tvHideC.setTextColor(randomColor());
-        tvHideD.setText("" + numArray[3]);
+        tvHideD.setText(String.valueOf(numArray[3]));
         tvHideD.setTextColor(randomColor());
 
         // Num 1
         Matrix matrixA = new Matrix();
         matrixA.reset();
         matrixA.setRotate(randomAngle());
-        Bitmap bmNumA = Bitmap.createBitmap(getBitmapFromView(tvHideA, 120, 150), 0, 0, 120, 150, matrixA, true);
+        Bitmap bmNumA = Bitmap.createBitmap(BitmapUtils.getBitmapFromView(
+                tvHideA, 180, 210), 0, 0, 180, 210, matrixA, true);
         ivNumA.setImageBitmap(bmNumA);
         // Num 2
         Matrix matrixB = new Matrix();
         matrixB.reset();
         matrixB.setRotate(randomAngle());
-        Bitmap bmNumB = Bitmap.createBitmap(getBitmapFromView(tvHideB, 120, 150), 0, 0, 120, 150, matrixB, true);
+        Bitmap bmNumB = Bitmap.createBitmap(BitmapUtils.getBitmapFromView(
+                tvHideB, 180, 210), 0, 0, 180, 210, matrixB, true);
         ivNumB.setImageBitmap(bmNumB);
         // Num 3
         Matrix matrixC = new Matrix();
         matrixC.reset();
         matrixC.setRotate(randomAngle());
-        Bitmap bmNumC = Bitmap.createBitmap(getBitmapFromView(tvHideC, 120, 150), 0, 0, 120, 150, matrixC, true);
+        Bitmap bmNumC = Bitmap.createBitmap(BitmapUtils.getBitmapFromView(
+                tvHideC, 180, 210), 0, 0, 180, 210, matrixC, true);
         ivNumC.setImageBitmap(bmNumC);
         // Num 4
         Matrix matrixD = new Matrix();
         matrixD.reset();
         matrixD.setRotate(randomAngle());
-        Bitmap bmNumD = Bitmap.createBitmap(getBitmapFromView(tvHideD, 120, 150), 0, 0, 120, 150, matrixD, true);
+        Bitmap bmNumD = Bitmap.createBitmap(BitmapUtils.getBitmapFromView(
+                tvHideD, 180, 210), 0, 0, 180, 210, matrixD, true);
         ivNumD.setImageBitmap(bmNumD);
     }
 
-    public int randomAngle() {
+    /**
+     * 旋转角度
+     */
+    private int randomAngle() {
         return 20 * (new Random().nextInt(5) - new Random().nextInt(3));
     }
 
-    public int randomColor() {
+    private int randomColor() {
         colorArray[0] = 0xFF000000; // BLACK
         colorArray[1] = 0xFFFF00FF; // MAGENTA
         colorArray[2] = 0xFFFF0000; // RED
@@ -281,16 +299,4 @@ public class VerficationCodeActivity extends BaseActivity {
         int randomColorId = new Random().nextInt(6);
         return colorArray[randomColorId];
     }
-
-    public static Bitmap getBitmapFromView(View view, int width, int height) {
-        int widthSpec = View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY);
-        int heightSpec = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
-        view.measure(widthSpec, heightSpec);
-        view.layout(0, 0, width, height);
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        view.draw(canvas);
-        return bitmap;
-    }
-
 }
