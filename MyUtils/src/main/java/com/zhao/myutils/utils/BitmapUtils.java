@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ImageUtils {
+public class BitmapUtils {
 
     /**
      * convert Drawable to byte array
@@ -99,9 +99,6 @@ public class ImageUtils {
 
     /**
      * 根据图像路径返回图像的旋转角度
-     *
-     * @param imageFile
-     * @return
      */
     public static int getExifRotation(File imageFile) {
         if (imageFile == null) {
