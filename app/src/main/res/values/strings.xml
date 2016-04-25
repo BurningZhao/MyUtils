@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyUtils</string>
+    <string name="test_verification_code">Test verification code</string>
 </resources>
