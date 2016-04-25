@@ -1,9 +1,11 @@
-package com.zhao.myutils.utils;
+package com.zhao.myutils.task;
 
 import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
+
+import com.zhao.myutils.utils.LogUtil;
 
 import java.lang.ref.WeakReference;
 
