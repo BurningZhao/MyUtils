@@ -6,6 +6,11 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 
 public class DialogUtils {
+
+    public static void showDialog(Context context, int resId, String message, final OnClickListener positiveListener) {
+        comfirm(context, context.getResources().getString(resId), message, positiveListener, null);
+    }
+
     public static void showDialog(Context context, String title, String message, final OnClickListener positiveListener) {
         comfirm(context, title, message, positiveListener, null);
     }

@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * Description:app是否在前台、退出app等
- *
  */
 public class AppManager {
 

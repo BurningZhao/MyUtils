@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * Description: 双击退出app
+ * Description: 双击退出app，默认是2s内
  *
  */
 public class DoubleClickExitDetector {

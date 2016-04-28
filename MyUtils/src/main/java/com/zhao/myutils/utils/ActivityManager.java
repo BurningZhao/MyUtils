@@ -7,7 +7,6 @@ import android.content.Intent;
 import java.util.ArrayList;
 import java.util.Stack;
 
-
 /**
  * activity 管理类
  */

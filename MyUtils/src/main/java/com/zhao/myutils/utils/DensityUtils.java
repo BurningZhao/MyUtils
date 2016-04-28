@@ -8,7 +8,6 @@ import android.util.TypedValue;
  */
 public class DensityUtils {
 
-
     /**
      * dp转px
      */

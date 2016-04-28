@@ -1,6 +1,7 @@
 package com.zhao.test.ui;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.zhao.myutils.base.BaseActivity;
+import com.zhao.myutils.utils.DialogUtils;
 import com.zhao.test.R;
 
 import java.util.ArrayList;
@@ -66,8 +68,15 @@ public class MainActivity extends BaseActivity {
                 // and the user would benefit from additional context for the use of the permission.
                 // For example if the user has previously denied the permission.
                 // Need Rationale
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        permissionsList.toArray(new String[permissionsList.size()]), PERMISSIONS_REQUEST);
+                DialogUtils.showDialog(this,
+                        getResources().getString(R.string.permissions_obtain_title), null,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(MainActivity.this,
+                                        permissionsList.toArray(new String[permissionsList.size()]), PERMISSIONS_REQUEST);
+                            }
+                        });
             } else {
                 if (permissionsList.size() > 0) {
                     ActivityCompat.requestPermissions(this, permissionsList.toArray(new String[permissionsList.size()]),
