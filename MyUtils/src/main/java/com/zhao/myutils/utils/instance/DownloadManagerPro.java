@@ -1,4 +1,4 @@
-package com.zhao.myutils.utils;
+package com.zhao.myutils.utils.instance;
 
 import android.app.DownloadManager;
 import android.database.Cursor;

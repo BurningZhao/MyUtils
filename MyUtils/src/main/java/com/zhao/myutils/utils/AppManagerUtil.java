@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Description:app是否在前台、退出app等
  */
-public class AppManager {
+public class AppManagerUtil {
 
     /**
      * 判断当前App是否在前台

@@ -18,6 +18,8 @@ import java.util.Random;
 
 /**
  * 验证码类
+ * from
+ * http://blog.csdn.net/zhoumushui/article/details/42023747
  */
 public class VerficationCodeActivity extends BaseActivity {
     // 数字类型验证码

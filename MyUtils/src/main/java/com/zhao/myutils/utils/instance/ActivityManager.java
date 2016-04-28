@@ -1,4 +1,4 @@
-package com.zhao.myutils.utils;
+package com.zhao.myutils.utils.instance;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,7 +22,7 @@ public class ActivityManager {
     /**
      * 单一实例
      */
-    public static ActivityManager getAppManager() {
+    public static ActivityManager getInstance() {
         if (instance == null) {
             instance = new ActivityManager();
         }

@@ -2,7 +2,7 @@ package com.zhao.myutils.base;
 
 import android.app.Application;
 
-import com.zhao.myutils.utils.AppManager;
+import com.zhao.myutils.utils.AppManagerUtil;
 
 /**
  * Description: Application基类
@@ -22,7 +22,7 @@ public class BaseApplication extends Application implements
         if (!isThrowEx && mDefaultHandler != null) {
             mDefaultHandler.uncaughtException(thread, ex);
         } else {
-            AppManager.quit(getApplicationContext());
+            AppManagerUtil.quit(getApplicationContext());
         }
     }
 
