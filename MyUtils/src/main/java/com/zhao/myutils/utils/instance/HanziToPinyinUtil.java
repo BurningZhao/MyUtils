@@ -1,4 +1,4 @@
-package com.zhao.myutils.utils;
+package com.zhao.myutils.utils.instance;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -95,7 +95,8 @@ public class HanziToPinyinUtil {
             '\u5ea2', '\u4e2d', '\u5dde', '\u6731', '\u6293', '\u62fd',
             '\u4e13', '\u5986', '\u96b9', '\u5b92', '\u5353', '\u4e72',
             '\u5b97', '\u90b9', '\u79df', '\u94bb', '\u539c', '\u5c0a',
-            '\u6628', '\u5159', '\u9fc3', '\u9fc4',};
+            '\u6628', '\u5159', '\u9fc3', '\u9fc4',
+    };
     /**
      * Pinyin array.
      * <p>
@@ -314,7 +315,9 @@ public class HanziToPinyinUtil {
             {90, 85, 0, 0, 0, 0}, {90, 85, 65, 78, 0, 0},
             {90, 85, 73, 0, 0, 0}, {90, 85, 78, 0, 0, 0},
             {90, 85, 79, 0, 0, 0}, {0, 0, 0, 0, 0, 0},
-            {83, 72, 65, 78, 0, 0}, {0, 0, 0, 0, 0, 0},};
+            {83, 72, 65, 78, 0, 0}, {0, 0, 0, 0, 0, 0},
+    };
+
     private static final String TAG = "HanziToPinyinUtil";
     // Turn on this flag when we want to check internal data structure.
     private static final boolean DEBUG = true;
@@ -599,8 +602,10 @@ public class HanziToPinyinUtil {
          * original string in source.
          */
         public String target;
+
         public Token() {
         }
+
         public Token(int type, String source, String target) {
             this.type = type;
             this.source = source;
