@@ -23,7 +23,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -68,4 +68,5 @@ dependencies {
     // dex突破65535的限制
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
 }
