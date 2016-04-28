@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyUtils</string>
+    <string name="permissions_obtain_title">Permissions obtain</string>
 </resources>

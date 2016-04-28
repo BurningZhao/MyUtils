@@ -1,4 +1,4 @@
-package com.zhao.myutils.utils.instance;
+package com.zhao.myutils.helper;
 
 import android.text.TextUtils;
 import android.util.Log;
