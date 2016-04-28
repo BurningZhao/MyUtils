@@ -4,6 +4,11 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
+    // dex 超过64k
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
     signingConfigs {
         release {
             //storeFile file("../yourapp.keystore")

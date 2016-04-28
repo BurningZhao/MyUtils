@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">TestApp</string>
     <string name="test_verification_code">验证验证码</string>
+    <string name="permissions_denied">Permissions denied.</string>
+    <string name="permissions_granted">Permissions granted</string>
 </resources>
