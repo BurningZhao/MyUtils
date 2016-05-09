@@ -18,7 +18,7 @@ import java.util.Map;
  * highly depends on zh_CN ICU collation data and must be always synchronized
  * with ICU. Currently this file is aligned to zh.txt in ICU 4.6
  */
-public class HanziToPinyinUtil {
+public class HanziToPinyin {
     /**
      * Unihans array.
      * <p>
@@ -318,7 +318,7 @@ public class HanziToPinyinUtil {
             {83, 72, 65, 78, 0, 0}, {0, 0, 0, 0, 0, 0},
     };
 
-    private static final String TAG = "HanziToPinyinUtil";
+    private static final String TAG = "HanziToPinyin";
     // Turn on this flag when we want to check internal data structure.
     private static final boolean DEBUG = true;
     /**
@@ -329,7 +329,7 @@ public class HanziToPinyinUtil {
     private static final Collator COLLATOR = Collator.getInstance(Locale.CHINA);
     // 常见姓氏多音字
     public static Map<String, Character> specialHanzi = new HashMap<>();
-    private static HanziToPinyinUtil sInstance;
+    private static HanziToPinyin sInstance;
 
     static {
         specialHanzi.put("8d3e", '\u7532'); //贾--甲
@@ -358,12 +358,12 @@ public class HanziToPinyinUtil {
     private final boolean mHasChinaCollator;
     private boolean isFamilyName = false;
 
-    protected HanziToPinyinUtil(boolean hasChinaCollator) {
+    protected HanziToPinyin(boolean hasChinaCollator) {
         mHasChinaCollator = hasChinaCollator;
     }
 
-    public static HanziToPinyinUtil getInstance() {
-        synchronized (HanziToPinyinUtil.class) {
+    public static HanziToPinyin getInstance() {
+        synchronized (HanziToPinyin.class) {
             if (sInstance != null) {
                 return sInstance;
             }
@@ -375,12 +375,12 @@ public class HanziToPinyinUtil {
                     if (DEBUG) {
                         Log.d(TAG, "Self validation. Result: " + doSelfValidation());
                     }
-                    sInstance = new HanziToPinyinUtil(true);
+                    sInstance = new HanziToPinyin(true);
                     return sInstance;
                 }
             }
             Log.w(TAG, "There is no Chinese collator, HanziToPinyin is disabled");
-            sInstance = new HanziToPinyinUtil(true);
+            sInstance = new HanziToPinyin(true);
             return sInstance;
         }
     }
