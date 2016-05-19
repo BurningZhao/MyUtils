@@ -10,7 +10,7 @@ import android.view.View;
  *
  * @since 2016/4/25
  */
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseFragmentActivity extends FragmentActivity {
     public Click click;
 
     @Override
@@ -18,9 +18,9 @@ public abstract class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(setLayoutResId());
         click = new Click();
+        initData(savedInstanceState);
         initView(savedInstanceState);
         initListener();
-        initData(savedInstanceState);
     }
 
     /**
@@ -28,7 +28,12 @@ public abstract class BaseActivity extends FragmentActivity {
      *
      * @return resId
      */
-    public abstract int setLayoutResId();
+    protected abstract int setLayoutResId();
+
+    /**
+     * 初始化数据
+     */
+    protected abstract void initData(Bundle bundle);
 
     /**
      * 初始化布局和控件
@@ -39,11 +44,6 @@ public abstract class BaseActivity extends FragmentActivity {
      * 初始化监听
      */
     protected abstract void initListener();
-
-    /**
-     * 初始化数据
-     */
-    protected abstract void initData(Bundle bundle);
 
     /**
      * 对view设置监听
