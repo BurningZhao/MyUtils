@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zhao.myutils.base.BaseActivity;
+import com.zhao.myutils.base.BaseFragmentActivity;
 import com.zhao.myutils.utils.BitmapUtils;
 import com.zhao.test.R;
 
@@ -21,7 +21,7 @@ import java.util.Random;
  * from
  * http://blog.csdn.net/zhoumushui/article/details/42023747
  */
-public class VerficationCodeActivity extends BaseActivity {
+public class VerficationCodeActivity extends BaseFragmentActivity {
     // 数字类型验证码
     private int[] numArray = new int[4];
     private int[] colorArray = new int[6];

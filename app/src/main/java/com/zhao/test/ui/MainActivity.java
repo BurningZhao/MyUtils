@@ -11,14 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.zhao.myutils.base.BaseActivity;
+import com.zhao.myutils.base.BaseFragmentActivity;
 import com.zhao.myutils.utils.PermissionCheckUtil;
 import com.zhao.test.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseFragmentActivity {
 
     private static final int PERMISSIONS_REQUEST = 2;
     private Button mVrificationcodeBtn;
