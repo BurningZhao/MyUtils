@@ -21,7 +21,7 @@ import java.util.List;
 public class MainActivity extends BaseFragmentActivity {
 
     private static final int PERMISSIONS_REQUEST = 2;
-    private Button mVrificationcodeBtn;
+    private Button mValidationCodeBtn;
 
     @Override
     public int setLayoutResId() {
@@ -30,12 +30,12 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     protected void initView(Bundle bundle) {
-        mVrificationcodeBtn = (Button) findViewById(R.id.verification_code);
+        mValidationCodeBtn = (Button) findViewById(R.id.validation_code);
     }
 
     @Override
     protected void initListener() {
-        setOnClickListener(mVrificationcodeBtn);
+        setOnClickListener(mValidationCodeBtn);
     }
 
     @Override
