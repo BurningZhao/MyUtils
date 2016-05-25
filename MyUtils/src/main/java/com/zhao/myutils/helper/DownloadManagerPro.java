@@ -9,6 +9,14 @@ import java.lang.reflect.Method;
 
 /**
  * Android系统下载管理DownloadManager增强方法
+ * getStatusById(long) 得到下载状态
+ * getDownloadBytes(long) 得到下载进度信息
+ * getBytesAndStatus(long) 得到下载进度信息和状态
+ * getFileName(long) 得到下载文件路径
+ * getUri(long) 得到下载uri
+ * getReason(long) 得到下载失败或暂停原因
+ * getPausedReason(long) 得到下载暂停原因
+ * getErrorCode(long) 得到下载错误码
  */
 public class DownloadManagerPro {
 
