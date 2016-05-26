@@ -2,7 +2,7 @@ package com.zhao.myutils.base;
 
 import android.app.Application;
 
-import com.zhao.myutils.utils.AppManagerUtil;
+import com.zhao.myutils.utils.CrashHandler;
 
 /**
  * Description: Application基类
@@ -10,26 +10,16 @@ import com.zhao.myutils.utils.AppManagerUtil;
  * @author zhaoqingbo
  * @since 2016/4/27
  */
-public class BaseApplication extends Application implements
-        Thread.UncaughtExceptionHandler {
-    // 是否抛出异常
-    private boolean isThrowEx = false;
-    private Thread.UncaughtExceptionHandler mDefaultHandler;
+public class BaseApplication extends Application{
 
     @Override
-    public void uncaughtException(Thread thread, Throwable ex) {
-        ex.printStackTrace();
-        if (!isThrowEx && mDefaultHandler != null) {
-            mDefaultHandler.uncaughtException(thread, ex);
-        } else {
-            AppManagerUtil.quit(getApplicationContext());
-        }
+    public void onCreate(){
+        super.onCreate();
+        initErrorHandler();
     }
 
-    public BaseApplication() {
-        super();
-        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-        Thread.setDefaultUncaughtExceptionHandler(this);
+    private void initErrorHandler(){
+        CrashHandler handler = CrashHandler.getInstance();
+        handler.init(this);
     }
-
 }
