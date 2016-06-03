@@ -1,0 +1,36 @@
+    private Bitmap getQrBitmap(String qrCode) {
+        Bitmap bitmap = null;
+        try {
+            // 根据字符串生成二维码图片并显示在界面上，第二个参数为图片的大小（240*240）
+            Bitmap qrCodeBitmap = QrcodeToBitmap.createQRCode(qrCode, HEIGHT);
+            // ------------------添加logo部分------------------//
+            Bitmap logoBmp = BitmapFactory.decodeResource(
+                    mContext.getResources(), R.drawable.nextev_icon);
+
+            bitmap = Bitmap.createBitmap(qrCodeBitmap.getWidth(),
+                    qrCodeBitmap.getHeight(), qrCodeBitmap.getConfig());
+
+            // 缩放图片
+            Matrix m = new Matrix();
+            float sx = (float) 2 * 20 / logoBmp.getWidth();
+            float sy = (float) 2 * 20 / logoBmp.getHeight();
+            m.setScale(sx, sy);
+            // 重新构造一个40*40的图片
+            logoBmp = Bitmap.createBitmap(logoBmp, 0, 0, logoBmp.getWidth(),
+                    logoBmp.getHeight(), m, false);
+
+            // 二维码 绘制
+            Canvas canvas = new Canvas(bitmap);
+            canvas.drawBitmap(qrCodeBitmap, 0, 0, null);
+
+            // logo绘制在二维码中央
+            canvas.drawBitmap(logoBmp,
+                    qrCodeBitmap.getWidth() / 2 - logoBmp.getWidth() / 2,
+                    qrCodeBitmap.getHeight() / 2 - logoBmp.getHeight() / 2,
+                    null);
+
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }

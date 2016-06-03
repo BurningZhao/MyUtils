@@ -7,7 +7,12 @@
 
     <Button
         android:id="@+id/validation_code"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/test_verification_code"/>
+        android:text="验证验相关"/>
+    <Button
+        android:id="@+id/telephony_manager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TelephonyManager相关"/>
 </LinearLayout>

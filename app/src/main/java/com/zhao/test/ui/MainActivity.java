@@ -104,7 +104,7 @@ public class MainActivity extends BaseFragmentActivity {
     protected void treatClickEvent(View view) {
         super.treatClickEvent(view);
         switch (view.getId()) {
-            case R.id.verification_code:
+            case R.id.validation_code:
                 Intent intent = new Intent(this, VerficationCodeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
