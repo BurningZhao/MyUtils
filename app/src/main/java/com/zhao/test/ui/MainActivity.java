@@ -7,11 +7,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.zhao.myutils.base.BaseFragmentActivity;
+import com.zhao.myutils.utils.KeyBoardUtils;
 import com.zhao.myutils.utils.PermissionCheckUtil;
 import com.zhao.test.R;
 
@@ -112,5 +115,38 @@ public class MainActivity extends BaseFragmentActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            // 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体案件会移动焦点）
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+                KeyBoardUtils.hideSoftInput(this, v);
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+    /**
+     * 判断是或点击EDIT_TEXT 区域外隐藏键盘
+     */
+    protected boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left
+                    + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击EditText的事件，忽略它。
+                ((EditText) v).setCursorVisible(true);
+                return false;
+            } else {
+                return true;
+            }
+        }
+        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
+        return false;
     }
 }

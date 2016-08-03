@@ -9,10 +9,15 @@
         android:id="@+id/validation_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="验证验相关"/>
+        android:text="@string/verification_code"/>
     <Button
         android:id="@+id/telephony_manager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TelephonyManager相关"/>
+        android:text="@string/telephony_manager"/>
+    <EditText
+        android:id="@+id/hide_imm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hide_imm"/>
 </LinearLayout>
