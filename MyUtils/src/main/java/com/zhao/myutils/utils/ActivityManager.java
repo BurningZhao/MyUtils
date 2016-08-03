@@ -1,4 +1,4 @@
-package com.zhao.myutils.helper;
+package com.zhao.myutils.utils;
 
 import android.app.Activity;
 import android.content.Context;

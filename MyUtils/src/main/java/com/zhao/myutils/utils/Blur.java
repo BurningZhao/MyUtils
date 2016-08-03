@@ -12,15 +12,21 @@ import android.util.Log;
 
 /**
  * Description:高斯模糊
- *
+ * <p>
  * see github: https://github.com/PomepuyN/BlurEffectForAndroidDesign
  */
 public class Blur {
 
+    /**
+     *
+     * @param context Context
+     * @param sentBitmap Bitmap to blur
+     * @param radius int, must >=1
+     * @return
+     */
     @SuppressLint("NewApi")
     public static Bitmap fastblur(Context context, Bitmap sentBitmap, int radius) {
-
-        if (Build.VERSION.SDK_INT > 16) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
             Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
 
             final RenderScript rs = RenderScript.create(context);
@@ -36,7 +42,6 @@ public class Blur {
         }
 
         Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
-
         if (radius < 1) {
             return (null);
         }
@@ -45,7 +50,6 @@ public class Blur {
         int h = bitmap.getHeight();
 
         int[] pix = new int[w * h];
-        Log.e("pix", w + " " + h + " " + pix.length);
         bitmap.getPixels(pix, 0, w, 0, 0, w, h);
 
         int wm = w - 1;
@@ -231,7 +235,6 @@ public class Blur {
             }
         }
 
-        Log.e("pix", w + " " + h + " " + pix.length);
         bitmap.setPixels(pix, 0, w, 0, 0, w, h);
         return (bitmap);
     }

@@ -48,6 +48,9 @@ public class ContactsUtil {
         return bEmpty;
     }
 
+    /**
+     * 关闭Cursor
+     */
     public static void closeCursor(Cursor cursor) {
         if (cursor != null) {
             cursor.close();
@@ -256,9 +259,10 @@ public class ContactsUtil {
 
     /**
      * 删除contacts2.db中的数据
+     * @param flag ContactsContract.CALLER_IS_SYNCADAPTER为true，表示将所有与联系人有关联的数据库都删除了
      */
-    public static void clearContactsDb(Context context) {
-        clearAllContactsWithData(context);
+    public static void clearContactsDb(Context context, boolean flag) {
+        clearAllContactsWithData(context, flag);
         clearAllCallLog(context);
     }
 
@@ -266,15 +270,15 @@ public class ContactsUtil {
      * 物理删除所有联系人信息
      * ContactsContract.CALLER_IS_SYNCADAPTER为true，表示将所有与联系人有关联的数据库都删除了
      */
-    public static void clearAllContactsWithData(Context context) {
+    public static void clearAllContactsWithData(Context context, boolean flag) {
         ContentResolver resolver = context.getContentResolver();
         Uri uri = RawContacts.CONTENT_URI.buildUpon()
-                .appendQueryParameter(ContactsContract.CALLER_IS_SYNCADAPTER, "true").build();
+                .appendQueryParameter(ContactsContract.CALLER_IS_SYNCADAPTER, String.valueOf(flag)).build();
         resolver.delete(uri, null, null);
     }
 
     /**
-     * 删除所有通话记录
+     * 删除所有通话记录,需要Manifest.permission.WRITE_CALL_LOG,权限
      */
     public static void clearAllCallLog(Context context) {
         //删除所有通话记录

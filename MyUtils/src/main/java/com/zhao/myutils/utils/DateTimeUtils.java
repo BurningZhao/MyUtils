@@ -103,13 +103,6 @@ public class DateTimeUtils {
     }
 
     /**
-     * 获取日期年份
-     */
-    public static String getYear(Date date) {
-        return format(date).substring(0, 4);
-    }
-
-    /**
      * 按默认格式的字符串距离今天的天数
      */
     public static int countDays(String date) {
@@ -207,6 +200,129 @@ public class DateTimeUtils {
             int index = time.indexOf(" ");
             return time.substring(0, index);
         }
+    }
+
+    /**
+     * 获得某月的天数
+     *
+     * @param year
+     *          int
+     * @param month
+     *          int
+     * @return int
+     */
+    public static int getDaysOfMonth(String year, String month) {
+        int days = 0;
+        switch (month) {
+            case "1":
+            case "3":
+            case "5":
+            case "7":
+            case "8":
+            case "10":
+            case "12":
+                days = 31;
+                break;
+            case "4":
+            case "6":
+            case "9":
+            case "11":
+                days = 30;
+                break;
+            default:
+                if ((Integer.parseInt(year) % 4 == 0 && Integer.parseInt(year) % 100 != 0)
+                        || Integer.parseInt(year) % 400 == 0) {
+                    days = 29;
+                } else {
+                    days = 28;
+                }
+                break;
+        }
+        return days;
+    }
+
+    /**
+     * 获取某年某月的天数
+     *
+     * @param year
+     *          int
+     * @param month
+     *          int 月份[1-12]
+     * @return int
+     */
+    public static int getDaysOfMonth(int year, int month) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, 1);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
+    /**
+     * 获得当前日期
+     *
+     * @return int
+     */
+    public static int getToday() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.DATE);
+    }
+
+    /**
+     * 获得当前月份
+     *
+     * @return int
+     */
+    public static int getToMonth() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.MONTH) + 1;
+    }
+
+    /**
+     * 获得当前年份
+     *
+     * @return int
+     */
+    public static int getToYear() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.YEAR);
+    }
+
+    /**
+     * 返回日期的天
+     *
+     * @param date
+     *          Date
+     * @return int
+     */
+    public static int getDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.DATE);
+    }
+
+    /**
+     * 返回日期的年
+     *
+     * @param date
+     *          Date
+     * @return int
+     */
+    public static int getYear(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
+    }
+
+    /**
+     * 返回日期的月份，1-12
+     *
+     * @param date
+     *          Date
+     * @return int
+     */
+    public static int getMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.MONTH) + 1;
     }
 
 }

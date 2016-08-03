@@ -26,7 +26,6 @@ import javax.crypto.spec.DESKeySpec;
  * doDESEncode加密DES
  * MD5 加密MD5
  */
-
 public class DESMD5Utils {
 
     private static final char[] legalChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"

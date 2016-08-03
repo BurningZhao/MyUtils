@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.Settings;
 import android.text.TextUtils;
 
 import java.io.File;
@@ -608,23 +606,4 @@ public class PackageUtils {
         return "";
     }
 
-    /**
-     * 打开安装完成的App详情页面
-     * start InstalledAppDetails Activity
-     */
-    public static void startInstalledAppDetails(Context context, String packageName) {
-        Intent intent = new Intent();
-        int sdkVersion = Build.VERSION.SDK_INT;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.fromParts("package", packageName, null));
-        } else {
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
-            intent.putExtra((sdkVersion == Build.VERSION_CODES.FROYO ? "pkg"
-                    : "com.android.settings.ApplicationPkgName"), packageName);
-        }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
 }

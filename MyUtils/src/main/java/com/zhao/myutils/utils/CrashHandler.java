@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Process;
 
 /**
- * Description: 处理 uncheched Exception 导致程序的crash
+ * Description: 处理 unchecked Exception 导致程序的crash
  *
  * @author zhaoqingbo
  * @since 2016/5/26
