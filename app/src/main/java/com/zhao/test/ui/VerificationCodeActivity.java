@@ -21,7 +21,7 @@ import java.util.Random;
  * from
  * http://blog.csdn.net/zhoumushui/article/details/42023747
  */
-public class VerficationCodeActivity extends BaseFragmentActivity {
+public class VerificationCodeActivity extends BaseFragmentActivity {
     // 数字类型验证码
     private int[] numArray = new int[4];
     private int[] colorArray = new int[6];
