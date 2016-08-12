@@ -1,6 +1,5 @@
 package com.zhao.myutils.utils;
 
-import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Build;
@@ -39,7 +38,7 @@ public class AppManagerUtil {
     /**
      * 控制应用退出操作
      */
-    @SuppressLint("NewApi")
+    @SuppressWarnings("deprecation")
     public static void quit(Context context) {
         ActivityManager manager = (ActivityManager)
                 context.getSystemService(Context.ACTIVITY_SERVICE);

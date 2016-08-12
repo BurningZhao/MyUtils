@@ -11,10 +11,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="数字类型验证码："/>
+        android:text="@string/num_verification_code_type"/>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:visibility="gone"/>
 
             <TextView
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:visibility="gone"/>
 
             <TextView
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:visibility="gone"/>
 
             <TextView
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:visibility="gone"/>
         </LinearLayout>
 
@@ -94,30 +94,30 @@
             android:id="@+id/etCheck"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:hint="验证码"
+            android:hint="@string/verification_code"
             android:inputType="number"/>
 
         <Button
             android:id="@+id/btnCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="确定"/>
+            android:text="@android:string/ok"/>
 
         <TextView
             android:id="@+id/tvCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="结果"
+            android:text="@string/txt_finish"
             android:visibility="gone"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="计算类型验证码:"/>
+        android:text="@string/compute_verification_code"/>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -125,23 +125,22 @@
             android:id="@+id/tvHideE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tvHideF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tvHideG"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:visibility="gone"/>
-
 
         <ImageView
             android:id="@+id/ivNumE"
@@ -159,28 +158,30 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/etVerify"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:hint="计算结果"
+            android:hint="@string/compute_result"
             android:inputType="numberSigned"/>
 
         <Button
             android:id="@+id/btnVerify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="校验"/>
+            android:text="@string/check"/>
 
         <TextView
             android:id="@+id/tvVerify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="结果"
+            android:text="@string/result"
             android:visibility="gone"/>
     </LinearLayout>
 </LinearLayout>

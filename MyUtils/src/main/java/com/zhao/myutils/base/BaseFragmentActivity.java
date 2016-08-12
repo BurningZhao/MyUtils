@@ -18,8 +18,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(setLayoutResId());
         click = new Click();
-        initData(savedInstanceState);
         initView(savedInstanceState);
+        initData(savedInstanceState);
         initListener();
     }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:iconifiedByDefault="true"
+        android:showAsAction="always"
+        android:title="搜索"
+        tools:ignore="AppCompatResource"/>
+
+</menu>

@@ -46,8 +46,6 @@ public class MainActivity extends BaseFragmentActivity {
         // Marshmallow+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions();
-        } else {
-            // TODO 满足需要特定权限才能进行的操作
         }
     }
 
@@ -59,11 +57,8 @@ public class MainActivity extends BaseFragmentActivity {
         // add permission ->eg:
         addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION);
         addPermission(permissionsList, Manifest.permission.ACCESS_COARSE_LOCATION);
-        addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (!PermissionCheckUtil.isRequestPermissions(this, permissionsList, PERMISSIONS_REQUEST)) {
-            // TODO 满足需要特定权限才能进行的操作
-        }
+        addPermission(permissionsList, Manifest.permission.READ_PHONE_STATE);
+        PermissionCheckUtil.isRequestPermissions(this, permissionsList, PERMISSIONS_REQUEST);
     }
 
     /**
@@ -95,7 +90,6 @@ public class MainActivity extends BaseFragmentActivity {
                 }
                 if (granted) {
                     Toast.makeText(this, getResources().getString(R.string.permissions_granted), Toast.LENGTH_SHORT).show();
-                    // TODO 满足需要特定权限才能进行的操作
                 }
             }
         } else {

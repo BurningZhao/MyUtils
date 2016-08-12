@@ -1,4 +1,3 @@
-
 package com.zhao.myutils.base;
 
 import android.app.Activity;

@@ -31,10 +31,12 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
     private TextView tvHideB;
     private TextView tvHideC;
     private TextView tvHideD;
+
     private ImageView ivNumA;
     private ImageView ivNumB;
     private ImageView ivNumC;
     private ImageView ivNumD;
+
     private Button btnCheck;
     private TextView tvCheck;
     private EditText etCheck;
@@ -43,9 +45,11 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
     private TextView tvHideE;
     private TextView tvHideF;
     private TextView tvHideG;
+
     private ImageView ivNumE;
     private ImageView ivNumF;
     private ImageView ivNumG;
+
     private EditText etVerify;
     private Button btnVerify;
     private TextView tvVerify;
@@ -74,6 +78,7 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
         btnCheck = (Button) findViewById(R.id.btnCheck);
         etCheck = (EditText) findViewById(R.id.etCheck);
         tvCheck = (TextView) findViewById(R.id.tvCheck);
+
         // 计算类型的验证码
         tvHideE = (TextView) findViewById(R.id.tvHideE);
         tvHideF = (TextView) findViewById(R.id.tvHideF);
@@ -195,11 +200,11 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
             if (etCheck.getText().toString().trim().length() > 0) {
                 tvCheck.setVisibility(View.VISIBLE);
                 if (numStr.equals(etCheck.getText().toString())) {
-                    tvCheck.setText("输入正确");
+                    tvCheck.setText(R.string.input_right);
                     tvCheck.setTextColor(Color.GREEN);
                 } else {
                     setNum();
-                    tvCheck.setText("输入错误");
+                    tvCheck.setText(R.string.input_error);
                     tvCheck.setTextColor(Color.RED);
                 }
             } else {
@@ -210,11 +215,11 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
             if (etVerify.getText().toString().trim().length() > 0) {
                 tvVerify.setVisibility(View.VISIBLE);
                 if (etVerify.getText().toString().equals(String.valueOf(intResult))) {
-                    tvVerify.setText("正确");
+                    tvVerify.setText(android.R.string.ok);
                     tvVerify.setTextColor(Color.GREEN);
                 } else {
                     setVerify();
-                    tvVerify.setText("错误");
+                    tvVerify.setText(R.string.error);
                     tvVerify.setTextColor(Color.RED);
                 }
             } else {

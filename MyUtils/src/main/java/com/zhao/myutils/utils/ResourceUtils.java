@@ -102,7 +102,7 @@ public class ResourceUtils {
             return null;
         }
 
-        List<String> fileContent = new ArrayList<String>();
+        List<String> fileContent = new ArrayList<>();
         BufferedReader reader;
         try {
             InputStreamReader in = new InputStreamReader(context.getResources().openRawResource(resId));

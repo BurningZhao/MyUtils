@@ -9,7 +9,7 @@
         android:id="@+id/validation_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/verification_code"/>
+        android:text="@string/about_verification_code"/>
     <Button
         android:id="@+id/telephony_manager"
         android:layout_width="match_parent"

@@ -10,12 +10,12 @@ import com.zhao.myutils.utils.CrashHandler;
  * @author zhaoqingbo
  * @since 2016/4/27
  */
-public class BaseApplication extends Application {
+public abstract class BaseApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        initErrorHandler();
+//        initErrorHandler();
     }
 
     private void initErrorHandler() {

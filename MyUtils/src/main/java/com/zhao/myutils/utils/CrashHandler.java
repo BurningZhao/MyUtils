@@ -1,7 +1,8 @@
 package com.zhao.myutils.utils;
 
 import android.content.Context;
-import android.os.Process;
+import android.os.Looper;
+import android.widget.Toast;
 
 /**
  * Description: 处理 unchecked Exception 导致程序的crash
@@ -42,8 +43,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             mDefaultHandler.uncaughtException(thread, ex);
         } else {
             System.gc();
-            // 退出程序
-            Process.killProcess(Process.myPid());
+            AppManagerUtil.quit(mContext);
         }
     }
 
@@ -59,21 +59,22 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         if (ex == null) {
             return false;
         }
-        // TODO 处理异常信息
-//        new Thread() {
-//
-//            @Override
-//            public void run() {
-//                Looper.prepare();
-//                ex.printStackTrace();
-//                String err = "[" + ex.getMessage() + "]";
-//                Toast.makeText(mContext, "程序出现异常." + err, Toast.LENGTH_LONG)
-//                        .show();
-//                Looper.loop();
-//            }
-//
-//        }.start();
 
+        new Thread() {
+
+            @Override
+            public void run() {
+                Looper.prepare();
+                ex.printStackTrace();
+                String err = "[" + ex.getMessage() + "]";
+                Toast.makeText(mContext, "程序出现异常." + err, Toast.LENGTH_LONG)
+                        .show();
+                Looper.loop();
+            }
+
+        }.start();
+
+        // TODO 处理异常信息,例如保存到日志
         return true;
     }
 }

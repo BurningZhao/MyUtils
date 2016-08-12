@@ -1,26 +1,57 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
-
+    compileSdkVersion 24
+    buildToolsVersion '24.0.1'
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
     defaultConfig {
         applicationId "com.zhao.test"
         minSdkVersion 21
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        // dex突破65535的限制
+        multiDexEnabled true
     }
-    buildTypes {
+    signingConfigs {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //storeFile file("../yourapp.keystore")
+            //storePassword "your password"
+            //keyAlias "your alias"
+            //keyPassword "your password"
+
+            //setting your signing.properties
+            //first, add signing.properties to ./app/
+            //second, add property STORE_FILE, STORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD
         }
     }
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true" // 显示Log
+            versionNameSuffix "-debug"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+        }
 
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"             // 不显示Log
+            minifyEnabled false // 是否混淆
+            zipAlignEnabled true // Zipalign优化
+            shrinkResources true // 移除无用的resource文件
+            // 加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 签名
+            signingConfig signingConfigs.release
+        }
+    }
     lintOptions {
         disable 'InvalidPackage'
-        abortOnError false
+        abortOnError false // 不提示
+    }
+    productFlavors {
     }
 }
 
@@ -28,5 +59,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile project(':MyUtils')
-    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:appcompat-v7:24.1.1'
 }
