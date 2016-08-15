@@ -3,9 +3,8 @@ package com.zhao.test.ui;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +20,8 @@ import java.util.Random;
  * from
  * http://blog.csdn.net/zhoumushui/article/details/42023747
  */
-public class VerificationCodeActivity extends BaseFragmentActivity {
+public class VerificationCodeActivity extends BaseFragmentActivity
+        implements View.OnClickListener {
     // 数字类型验证码
     private int[] numArray = new int[4];
     private int[] colorArray = new int[6];
@@ -37,7 +37,6 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
     private ImageView ivNumC;
     private ImageView ivNumD;
 
-    private Button btnCheck;
     private TextView tvCheck;
     private EditText etCheck;
 
@@ -51,7 +50,6 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
     private ImageView ivNumG;
 
     private EditText etVerify;
-    private Button btnVerify;
     private TextView tvVerify;
 
     private String[] strVerify = new String[3];
@@ -64,7 +62,7 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
     }
 
     @Override
-    protected void initView(Bundle bundle) {
+    public void initView() {
         // 数字类型的验证码
         tvHideA = (TextView) findViewById(R.id.tvHideA);
         tvHideB = (TextView) findViewById(R.id.tvHideB);
@@ -75,7 +73,6 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
         ivNumC = (ImageView) findViewById(R.id.ivNumC);
         ivNumD = (ImageView) findViewById(R.id.ivNumD);
 
-        btnCheck = (Button) findViewById(R.id.btnCheck);
         etCheck = (EditText) findViewById(R.id.etCheck);
         tvCheck = (TextView) findViewById(R.id.tvCheck);
 
@@ -87,21 +84,25 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
         ivNumF = (ImageView) findViewById(R.id.ivNumF);
         ivNumG = (ImageView) findViewById(R.id.ivNumG);
 
-        btnVerify = (Button) findViewById(R.id.btnVerify);
         etVerify = (EditText) findViewById(R.id.etVerify);
         tvVerify = (TextView) findViewById(R.id.tvVerify);
     }
 
     @Override
-    protected void initListener() {
-        setOnClickListener(btnCheck);
-        setOnClickListener(btnVerify);
+    public void initData() {
+        setNum();
+        setVerify();
     }
 
     @Override
-    protected void initData(Bundle bundle) {
-        setNum();
-        setVerify();
+    public void initListener() {
+        findViewById(R.id.btnCheck, this);
+        findViewById(R.id.btnVerify, this);
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 
     /**
@@ -147,6 +148,7 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
             intVerify[0] = new Random().nextInt(10);
             intVerify[1] = new Random().nextInt(10);
         } while (intVerify[0] == intVerify[1]);
+
         // 获得运算符号：+，-，x
         intVerify[2] = new Random().nextInt(3);
         if (intVerify[2] == 0) {
@@ -193,49 +195,13 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
         }
     }
 
-    @Override
-    protected void treatClickEvent(View view) {
-        super.treatClickEvent(view);
-        if (view == btnCheck) {
-            if (etCheck.getText().toString().trim().length() > 0) {
-                tvCheck.setVisibility(View.VISIBLE);
-                if (numStr.equals(etCheck.getText().toString())) {
-                    tvCheck.setText(R.string.input_right);
-                    tvCheck.setTextColor(Color.GREEN);
-                } else {
-                    setNum();
-                    tvCheck.setText(R.string.input_error);
-                    tvCheck.setTextColor(Color.RED);
-                }
-            } else {
-                setNum();
-                tvCheck.setVisibility(View.GONE);
-            }
-        } else if (view == btnVerify) {
-            if (etVerify.getText().toString().trim().length() > 0) {
-                tvVerify.setVisibility(View.VISIBLE);
-                if (etVerify.getText().toString().equals(String.valueOf(intResult))) {
-                    tvVerify.setText(android.R.string.ok);
-                    tvVerify.setTextColor(Color.GREEN);
-                } else {
-                    setVerify();
-                    tvVerify.setText(R.string.error);
-                    tvVerify.setTextColor(Color.RED);
-                }
-            } else {
-                setVerify();
-                tvVerify.setVisibility(View.GONE);
-            }
-        }
-    }
-
     /**
      * 初始化随机数组
      */
     public void initNumArray() {
         numStr = "";
         String numStrTmp;
-        for (int i = 0; i < numArray.length; i++) {
+        for (int i = 0; i <= numArray.length; i++) {
             int numIntTmp = new Random().nextInt(10);
             numStrTmp = String.valueOf(numIntTmp);
             numStr = numStr + numStrTmp;
@@ -305,5 +271,51 @@ public class VerificationCodeActivity extends BaseFragmentActivity {
 
         int randomColorId = new Random().nextInt(6);
         return colorArray[randomColorId];
+    }
+
+    @NonNull
+    @Override
+    public BaseFragmentActivity getActivity() {
+        return this;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnCheck:
+                if (etCheck.getText().toString().trim().length() > 0) {
+                    tvCheck.setVisibility(View.VISIBLE);
+                    if (numStr.equals(etCheck.getText().toString())) {
+                        tvCheck.setText(R.string.input_right);
+                        tvCheck.setTextColor(Color.GREEN);
+                    } else {
+                        setNum();
+                        tvCheck.setText(R.string.input_error);
+                        tvCheck.setTextColor(Color.RED);
+                    }
+                } else {
+                    setNum();
+                    tvCheck.setVisibility(View.GONE);
+                }
+                break;
+            case R.id.btnVerify:
+                if (etVerify.getText().toString().trim().length() > 0) {
+                    tvVerify.setVisibility(View.VISIBLE);
+                    if (etVerify.getText().toString().equals(String.valueOf(intResult))) {
+                        tvVerify.setText(android.R.string.ok);
+                        tvVerify.setTextColor(Color.GREEN);
+                    } else {
+                        setVerify();
+                        tvVerify.setText(R.string.error);
+                        tvVerify.setTextColor(Color.RED);
+                    }
+                } else {
+                    setVerify();
+                    tvVerify.setVisibility(View.GONE);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

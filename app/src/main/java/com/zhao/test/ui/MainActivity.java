@@ -4,12 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,32 +19,38 @@ import com.zhao.test.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseFragmentActivity {
+import static com.zhao.test.R.layout.activity_main;
+
+public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
 
     private static final int PERMISSIONS_REQUEST = 2;
-    private Button mValidationCodeBtn;
 
     @Override
     public int setLayoutResId() {
-        return R.layout.activity_main;
+        return activity_main;
     }
 
     @Override
-    protected void initView(Bundle bundle) {
-        mValidationCodeBtn = (Button) findViewById(R.id.validation_code);
+    public void initView() {
+
     }
 
     @Override
-    protected void initListener() {
-        setOnClickListener(mValidationCodeBtn);
-    }
-
-    @Override
-    protected void initData(Bundle bundle) {
+    public void initData() {
         // Marshmallow+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions();
         }
+    }
+
+    @Override
+    public void initListener() {
+        findViewById(R.id.validation_code, this);
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 
     /**
@@ -58,6 +62,7 @@ public class MainActivity extends BaseFragmentActivity {
         addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION);
         addPermission(permissionsList, Manifest.permission.ACCESS_COARSE_LOCATION);
         addPermission(permissionsList, Manifest.permission.READ_PHONE_STATE);
+        addPermission(permissionsList, Manifest.permission.KILL_BACKGROUND_PROCESSES);
         PermissionCheckUtil.isRequestPermissions(this, permissionsList, PERMISSIONS_REQUEST);
     }
 
@@ -99,20 +104,6 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     @Override
-    protected void treatClickEvent(View view) {
-        super.treatClickEvent(view);
-        switch (view.getId()) {
-            case R.id.validation_code:
-                Intent intent = new Intent(this, VerificationCodeActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         // 点击editText外隐藏ime
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -146,5 +137,23 @@ public class MainActivity extends BaseFragmentActivity {
         }
         // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
         return false;
+    }
+
+    @Override
+    public BaseFragmentActivity getActivity() {
+        return this;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.validation_code:
+                Intent intent = new Intent(this, VerificationCodeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivityWithAnimation(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

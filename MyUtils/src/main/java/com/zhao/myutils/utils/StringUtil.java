@@ -15,6 +15,24 @@ public class StringUtil {
     }
 
     /**
+     * 判断字符是否非空
+     *
+     * @param s string
+     * @param trim boolean
+     * @return
+     */
+    public static boolean isBlank(String s, boolean trim) {
+        if (s == null) {
+            return false;
+        }
+        if (trim) {
+            s = s.trim();
+        }
+        return s.length() > 0;
+
+    }
+
+    /**
      * 使用utf-8转码
      */
     public static String utf8Encode(String str) {
