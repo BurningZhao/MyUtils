@@ -34,7 +34,8 @@ public class PreferenceUtils {
 
     /**
      * 获取指定数据
-     * @param key key值
+     *
+     * @param key        key值
      * @param defaultObj 默认值
      */
     public static Object get(Context context, String key, Object defaultObj) {

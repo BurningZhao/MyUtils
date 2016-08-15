@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Looper;
 import android.widget.Toast;
 
+import com.zhao.myutils.manager.AppManagerUtil;
+
 /**
  * Description: 处理 unchecked Exception 导致程序的crash
  *
@@ -45,7 +47,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             AppManagerUtil.quit(mContext);
         }
     }
-
 
     /**
      * 自定义错误处理,收集错误信息 发送错误报告等操作均在此完成.

@@ -26,19 +26,18 @@ import java.lang.reflect.Method;
  * 其中getScreenshot中的SurfaceControl.screenshot方法需要权限android.permission.READ_FRAME_BUFFER,应用内使用可用view.getDrawingCache代替
  * 使用方法:
  * BlurBackgroundDrawable drawable = new BlurBackgroundDrawable(context); drawable.start(); imageView.setBackground(drawable);
- *
+ * <p>
  * see github: https://github.com/bjzhou/BlurBackgroundDrawable/blob/master/BlurBackgroundDrawable.java
  */
 public class BlurBackgroudDrawable extends Drawable implements Animatable, Runnable {
 
+    private static Bitmap mScreenshot;
+    private static int SCREEN_WIDTH;
+    private static int SCREEN_HEIGHT;
     private boolean mRunning = false;
     private Context mContext;
     private Rect mDstRect = new Rect();
     private Display mDisplay;
-
-    private static Bitmap mScreenshot;
-    private static int SCREEN_WIDTH;
-    private static int SCREEN_HEIGHT;
 
     @SuppressWarnings("deprecation")
     public BlurBackgroudDrawable(Context context) {
@@ -47,6 +46,27 @@ public class BlurBackgroudDrawable extends Drawable implements Animatable, Runna
         mDisplay = wm.getDefaultDisplay();
         SCREEN_WIDTH = mDisplay.getWidth();
         SCREEN_HEIGHT = mDisplay.getHeight();
+    }
+
+    private static Bitmap getScreenshot(Context context) throws IllegalAccessException {
+        Bitmap shotBitmap = null;
+        try {
+            final Class<?> SurfaceControl = Class.forName("android.view.SurfaceControl");
+            if (SurfaceControl != null) {
+                final Method screenshot = SurfaceControl.getDeclaredMethod("screenshot", int.class,
+                        int.class, int.class, int.class);
+                shotBitmap = (Bitmap) screenshot.invoke(null,
+                        SCREEN_WIDTH / 6,
+                        SCREEN_HEIGHT / 6,
+                        20000,
+                        140000);
+            }
+        } catch (ClassNotFoundException | NoSuchMethodException
+                | IllegalArgumentException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return shotBitmap;
     }
 
     @Override
@@ -95,6 +115,15 @@ public class BlurBackgroudDrawable extends Drawable implements Animatable, Runna
     @Override
     public void run() {
         new MyAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private int getNavigationBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return resources.getDimensionPixelSize(resourceId);
+        }
+        return 0;
     }
 
     class MyAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -150,36 +179,6 @@ public class BlurBackgroudDrawable extends Drawable implements Animatable, Runna
                 invalidateSelf();
             }
         }
-    }
-
-    private static Bitmap getScreenshot(Context context) throws IllegalAccessException {
-        Bitmap shotBitmap = null;
-        try {
-            final Class<?> SurfaceControl = Class.forName("android.view.SurfaceControl");
-            if (SurfaceControl != null) {
-                final Method screenshot = SurfaceControl.getDeclaredMethod("screenshot", int.class,
-                        int.class, int.class, int.class);
-                shotBitmap = (Bitmap) screenshot.invoke(null,
-                        SCREEN_WIDTH / 6,
-                        SCREEN_HEIGHT / 6,
-                        20000,
-                        140000);
-            }
-        } catch (ClassNotFoundException | NoSuchMethodException
-                | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-        return shotBitmap;
-    }
-
-    private int getNavigationBarHeight(Context context) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            return resources.getDimensionPixelSize(resourceId);
-        }
-        return 0;
     }
 
 }

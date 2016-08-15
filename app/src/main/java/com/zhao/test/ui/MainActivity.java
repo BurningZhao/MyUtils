@@ -63,8 +63,9 @@ public class MainActivity extends BaseFragmentActivity {
 
     /**
      * Add required permission to the list and check if not already granted access
+     *
      * @param permissionsList - the list with the permissions
-     * @param permission - the permission the will be added
+     * @param permission      - the permission the will be added
      */
     private void addPermission(List<String> permissionsList, String permission) {
         if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -113,6 +114,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        // 点击editText外隐藏ime
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             // 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体案件会移动焦点）
             View v = getCurrentFocus();
@@ -120,8 +122,10 @@ public class MainActivity extends BaseFragmentActivity {
                 KeyBoardUtils.hideSoftInput(this, v);
             }
         }
+        // over
         return super.dispatchTouchEvent(ev);
     }
+
     /**
      * 判断是或点击EDIT_TEXT 区域外隐藏键盘
      */

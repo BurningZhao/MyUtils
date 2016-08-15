@@ -38,11 +38,11 @@ public class WeakAsyncQueryHandler extends AsyncQueryHandler {
 
     /**
      * fetch the list of search result
-     * <p/>
+     * <p>
      * It will asynchronously update the content of the list view when the fetch completes.
      */
     public void startQuery(Uri uri, String[] projection, String selection,
-                      String[] selectionArgs, String orderBy) {
+                           String[] selectionArgs, String orderBy) {
         LogUtil.d(TAG, "fetch mQueryToken " + mQueryToken);
         if (mQueryToken > initToken) {
             cancelFetch(mQueryToken);

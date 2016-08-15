@@ -259,6 +259,7 @@ public class ContactsUtil {
 
     /**
      * 删除contacts2.db中的数据
+     *
      * @param flag ContactsContract.CALLER_IS_SYNCADAPTER为true，表示将所有与联系人有关联的数据库都删除了
      */
     public static void clearContactsDb(Context context, boolean flag) {

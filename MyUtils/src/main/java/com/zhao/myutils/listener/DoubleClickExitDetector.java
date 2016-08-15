@@ -5,7 +5,6 @@ import android.widget.Toast;
 
 /**
  * Description: 双击退出app，默认是2s内
- *
  */
 public class DoubleClickExitDetector {
     public static final String DEFAULT_HINT_MESSAGE = "再按一次退出程序";

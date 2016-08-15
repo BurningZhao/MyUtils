@@ -1,4 +1,4 @@
-package com.zhao.myutils.utils;
+package com.zhao.myutils.manager;
 
 import android.app.DownloadManager;
 import android.database.Cursor;
@@ -54,6 +54,34 @@ public class DownloadManagerPro {
         initPauseMethod();
         initResumeMethod();
         return pauseDownload != null && resumeDownload != null;
+    }
+
+    private static void initPauseMethod() {
+        if (isInitPauseDownload) {
+            return;
+        }
+
+        isInitPauseDownload = true;
+        try {
+            pauseDownload = DownloadManager.class.getMethod(METHOD_NAME_PAUSE_DOWNLOAD, long[].class);
+        } catch (Exception e) {
+            // accept all exception
+            e.printStackTrace();
+        }
+    }
+
+    private static void initResumeMethod() {
+        if (isInitResumeDownload) {
+            return;
+        }
+
+        isInitResumeDownload = true;
+        try {
+            resumeDownload = DownloadManager.class.getMethod(METHOD_NAME_RESUME_DOWNLOAD, long[].class);
+        } catch (Exception e) {
+            // accept all exception
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -156,20 +184,6 @@ public class DownloadManagerPro {
         return -1;
     }
 
-    private static void initPauseMethod() {
-        if (isInitPauseDownload) {
-            return;
-        }
-
-        isInitPauseDownload = true;
-        try {
-            pauseDownload = DownloadManager.class.getMethod(METHOD_NAME_PAUSE_DOWNLOAD, long[].class);
-        } catch (Exception e) {
-            // accept all exception
-            e.printStackTrace();
-        }
-    }
-
     /**
      * 恢复下载
      * resume download
@@ -193,20 +207,6 @@ public class DownloadManagerPro {
             e.printStackTrace();
         }
         return -1;
-    }
-
-    private static void initResumeMethod() {
-        if (isInitResumeDownload) {
-            return;
-        }
-
-        isInitResumeDownload = true;
-        try {
-            resumeDownload = DownloadManager.class.getMethod(METHOD_NAME_RESUME_DOWNLOAD, long[].class);
-        } catch (Exception e) {
-            // accept all exception
-            e.printStackTrace();
-        }
     }
 
     /**

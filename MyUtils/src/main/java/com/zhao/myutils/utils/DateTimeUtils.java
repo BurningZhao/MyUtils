@@ -205,10 +205,8 @@ public class DateTimeUtils {
     /**
      * 获得某月的天数
      *
-     * @param year
-     *          int
-     * @param month
-     *          int
+     * @param year  int
+     * @param month int
      * @return int
      */
     public static int getDaysOfMonth(String year, String month) {
@@ -244,10 +242,8 @@ public class DateTimeUtils {
     /**
      * 获取某年某月的天数
      *
-     * @param year
-     *          int
-     * @param month
-     *          int 月份[1-12]
+     * @param year  int
+     * @param month int 月份[1-12]
      * @return int
      */
     public static int getDaysOfMonth(int year, int month) {
@@ -289,8 +285,7 @@ public class DateTimeUtils {
     /**
      * 返回日期的天
      *
-     * @param date
-     *          Date
+     * @param date Date
      * @return int
      */
     public static int getDay(Date date) {
@@ -302,8 +297,7 @@ public class DateTimeUtils {
     /**
      * 返回日期的年
      *
-     * @param date
-     *          Date
+     * @param date Date
      * @return int
      */
     public static int getYear(Date date) {
@@ -315,8 +309,7 @@ public class DateTimeUtils {
     /**
      * 返回日期的月份，1-12
      *
-     * @param date
-     *          Date
+     * @param date Date
      * @return int
      */
     public static int getMonth(Date date) {

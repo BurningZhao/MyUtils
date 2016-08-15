@@ -6,7 +6,6 @@ import android.util.Log;
  * log 输出控制工具, 默认显示Log.DEBUG之上的
  *
  * @author zhaoqingbo
- *
  */
 public class LogUtil {
     public static int level = Log.DEBUG;

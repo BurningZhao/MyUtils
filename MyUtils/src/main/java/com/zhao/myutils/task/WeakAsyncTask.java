@@ -3,6 +3,7 @@ package com.zhao.myutils.task;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
+
 /**
  * Description: 避免内存泄漏
  *

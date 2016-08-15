@@ -8,7 +8,6 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.util.Log;
 
 /**
  * Description:高斯模糊
@@ -18,10 +17,9 @@ import android.util.Log;
 public class Blur {
 
     /**
-     *
-     * @param context Context
+     * @param context    Context
      * @param sentBitmap Bitmap to blur
-     * @param radius int, must >=1
+     * @param radius     int, must >=1
      * @return
      */
     @SuppressLint("NewApi")

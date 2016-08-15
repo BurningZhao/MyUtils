@@ -21,7 +21,7 @@ public class QrCodeUtil {
 
     private static final String UTF8 = "UTF-8";
 
-    public static Bitmap createQRCode(String str,int widthAndHeight) throws WriterException {
+    public static Bitmap createQRCode(String str, int widthAndHeight) throws WriterException {
         Hashtable<EncodeHintType, String> hints = new Hashtable<>();
         hints.put(EncodeHintType.CHARACTER_SET, UTF8);
         BitMatrix matrix = new MultiFormatWriter().encode(str,

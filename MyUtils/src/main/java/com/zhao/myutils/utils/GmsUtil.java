@@ -8,7 +8,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /**
  * check google play service util
- * <p/>
+ * <p>
  * Created by zhaoqingbo on 2015/6/11.
  */
 public class GmsUtil {
@@ -16,6 +16,7 @@ public class GmsUtil {
 
     /**
      * 判断手机是否安装google套件
+     *
      * @param context 上下文环境
      * @return true 安装
      */
@@ -30,6 +31,7 @@ public class GmsUtil {
 
     /**
      * 判断手机版本是否是4.3及以上版本
+     *
      * @return true 是4.3及以上版本
      */
     public static boolean isSupportWearSdkVersion() {
