@@ -10,7 +10,9 @@ new CountDown(textView, "%s秒", 10).start();
         if (exitDetector.onClick()) {
             super.onBackPressed();
         }
-    }
-    
+    }    
+
+# SSLUtil的使用
+[Android HTTPS如何10分钟实现自签名SSL证书](http://my.oschina.net/u/2437072/blog/669041)
 
 
