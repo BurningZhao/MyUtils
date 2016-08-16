@@ -11,7 +11,7 @@ android {
     }
     buildTypes {
         release {
-            consumerProguardFiles 'proguard-project.txt'
+            consumerProguardFiles 'proguard-rules.pro'
         }
     }
     lintOptions {
