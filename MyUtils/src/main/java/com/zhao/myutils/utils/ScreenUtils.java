@@ -3,10 +3,13 @@ package com.zhao.myutils.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Picture;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebView;
 
 /**
  * 获得屏幕相关的辅助类
@@ -93,6 +96,22 @@ public class ScreenUtils {
                 - statusBarHeight);
         view.destroyDrawingCache();
         return bp;
+    }
+
+    /**
+     * 截取webView快照(webView加载的整个内容的大小)
+     *
+     * @param webView webview
+     * @return 截屏bitmap
+     */
+    private static Bitmap captureWebView(WebView webView) {
+        Picture snapShot = webView.capturePicture();
+
+        Bitmap bmp = Bitmap.createBitmap(snapShot.getWidth(),
+                snapShot.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        snapShot.draw(canvas);
+        return bmp;
     }
 
 }

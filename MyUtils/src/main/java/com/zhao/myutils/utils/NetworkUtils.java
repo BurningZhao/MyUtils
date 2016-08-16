@@ -28,7 +28,7 @@ public class NetworkUtils {
     }
 
     /**
-     * 活动当前网络连接类型
+     * 获得当前网络连接类型
      */
     public static int getActiveNetworkType(Context context) {
         NetworkInfo networkInfo = getNetworkInfo(context);

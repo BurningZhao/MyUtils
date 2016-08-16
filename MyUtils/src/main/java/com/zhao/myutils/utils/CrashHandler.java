@@ -46,9 +46,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private static final String VERSION_NAME = "versionName";
     private static final String VERSION_CODE = "versionCode";
 
-    // log file store dir
-    private static final String LOG_DIR = "Log";
+
+    /**
+    * crash记录信息文件夹路径
+    */
+    private static final String LOG_DIR = SDCardUtils.getSDCardPath() + "Log" + File.separator;
     private static final String LOG_NAME = "crash";
+    private static final String FILE_NAME_SUFFIX=".log";
 
     public static CrashHandler getInstance() {
         if (instance == null) {
@@ -184,12 +188,11 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         try {
             // long timestamp = System.currentTimeMillis();
             String time = mDateFormat.format(new Date());
-            String fileName = LOG_NAME + time + ".log";
+            String fileName = LOG_NAME + time + FILE_NAME_SUFFIX;
             if (SDCardUtils.isSDCardEnable()) {
-                String path = SDCardUtils.getSDCardPath() + LOG_DIR + File.separator;
-                FileUtil.makeDirs(path);
+                FileUtil.makeDirs(LOG_DIR);
 
-                FileOutputStream fos = new FileOutputStream(path + fileName);
+                FileOutputStream fos = new FileOutputStream(LOG_DIR + fileName);
                 fos.write(sb.toString().getBytes());
                 LogUtil.i(TAG, "saveCrashInfoFile: " + sb.toString());
                 fos.close();
