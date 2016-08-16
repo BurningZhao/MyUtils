@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zhao.myutils.base.BaseFragmentActivity;
 import com.zhao.myutils.utils.BitmapUtils;
 import com.zhao.test.R;
+import com.zhao.test.config.Config;
 
 import java.util.Random;
 
@@ -201,7 +202,7 @@ public class VerificationCodeActivity extends BaseFragmentActivity
     public void initNumArray() {
         numStr = "";
         String numStrTmp;
-        for (int i = 0; i <= numArray.length; i++) {
+        for (int i = 0; i < numArray.length; i++) {
             int numIntTmp = new Random().nextInt(10);
             numStrTmp = String.valueOf(numIntTmp);
             numStr = numStr + numStrTmp;
@@ -296,6 +297,9 @@ public class VerificationCodeActivity extends BaseFragmentActivity
                 } else {
                     setNum();
                     tvCheck.setVisibility(View.GONE);
+                    if (Config.SHOW_CRASH) {
+                        throw new NullPointerException();
+                    }
                 }
                 break;
             case R.id.btnVerify:

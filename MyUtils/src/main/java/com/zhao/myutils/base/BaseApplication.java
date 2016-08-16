@@ -15,7 +15,7 @@ public abstract class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        initErrorHandler();
+        initErrorHandler();
     }
 
     private void initErrorHandler() {

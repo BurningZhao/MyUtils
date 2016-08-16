@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MyUtils</string>
     <string name="permissions_obtain_title">Permissions obtain</string>
+    <string name="promise">提示</string>
+    <string name="app_exception">程序崩溃了...</string>
+    <string name="know">我知道了</string>
 </resources>

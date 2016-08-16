@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">我的工具</string>
     <string name="permissions_obtain_title">需要的权限</string>
+    <string name="promise">提示</string>
+    <string name="app_exception">程序崩溃了...</string>
+    <string name="know">我知道了</string>
 </resources>

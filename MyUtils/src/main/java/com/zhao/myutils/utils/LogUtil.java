@@ -28,6 +28,12 @@ public class LogUtil {
         }
     }
 
+    public static void e(String tag, String message,  Throwable tr) {
+        if (level <= Log.ERROR) {
+            Log.e(tag, message, tr);
+        }
+    }
+
     public static void w(String tag, String message) {
         if (level <= Log.WARN) {
             Log.w(tag, message);
