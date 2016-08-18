@@ -1,5 +1,6 @@
 package com.zhao.myutils.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -41,10 +42,38 @@ public class KeyBoardUtils {
     }
 
     /**
+     * 显示软键盘
+     */
+    public static void showSoftInput(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            showSoftInput(activity, view);
+        }
+    }
+
+    /**
      * 隐藏软键盘
      */
     public static void hideSoftInput(Context context, View view) {
         getInputMethodManager(context).hideSoftInputFromWindow(
                 view.getWindowToken(), 0);
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+    public static void hideSoftInput(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            hideSoftInput(activity, view);
+        }
+    }
+
+    /**
+     * 输入法是否激活
+     */
+    public static boolean isActive(Context context) {
+        InputMethodManager imm = getInputMethodManager(context);
+        return imm.isActive();
     }
 }
