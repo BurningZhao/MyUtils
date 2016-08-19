@@ -97,10 +97,12 @@ to finish. Started and stopped directly by specific background tasks when needed
                    }
                }
 
+# proguard 配置
+[Proguard-Config](https://github.com/AndroidKnife/proguard-config)
+可以参考这个库,可以把该库中的相应lib对应的文件,直接copy文件中内容到proguard-rules.pro
+
 # 参考学习的开源库
 [SystemBarTint](https://github.com/jgilfelt/SystemBarTint)
 系统栏管理器，我把它用在ZBLibrary的BaseActivity中实现了状态栏沉浸。
-[Proguard-Config](https://github.com/AndroidKnife/proguard-config)
-可以直接copy相应文件中内容到proguard-rules.pro
 [ZBLibrary](https://github.com/TommyLemon/Android-ZBLibrary)
 很多东西是从这个库里面学习copy的

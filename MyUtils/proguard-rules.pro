@@ -51,6 +51,7 @@
 
 # Your library may contain more items that need to be preserved;
 # typically classes that are dynamically created using Class.forName:
-# -keep public class mypackage.MyClass
-# -keep public interface mypackage.MyInterface
-# -keep public class * implements mypackage.MyInterface
+# eg keep com.zhao.myutils
+-keep class com.zhao.myutils.** { *; }
+-keepclassmembers class com.zhao.myutils.** { *; }
+-dontwarn com.zhao.myutils.**

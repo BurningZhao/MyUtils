@@ -21,6 +21,18 @@
 -verbose                                                                        # 混淆时是否记录日志
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*        # 混淆时所采用的算法
 
+# To prevent name conflict in incremental obfuscation.
+-useuniqueclassmembernames
+
+# dex does not like code run through proguard optimize and preverify steps.
+-dontoptimize
+-dontpreverify
+
+# Some classes in the libraries extend package private classes to chare common functionality
+# that isn't explicitly part of the API
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+
 # 保持哪些类不被混淆
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
@@ -81,7 +93,6 @@
 }
 
 #### 以上的是常用的 #####
-
 
 # 如果有引用v4包可以添加下面这行
 -keep class android.support.v4.** { *; }
