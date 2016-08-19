@@ -40,7 +40,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      * <p>
      * 不能在子类中创建
      */
-    protected LayoutInflater inflater = null;
+    protected LayoutInflater mInflater = null;
     /**
      * Activity 是否alive
      */
@@ -71,7 +71,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
-        inflater = getLayoutInflater();
+        mInflater = getLayoutInflater();
         isAlive = true;
         threadNameList = new ArrayList<>();
         setContentView(setLayoutResId());
@@ -84,7 +84,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      */
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        view = inflater.inflate(layoutResID, null);
+        view = mInflater.inflate(layoutResID, null);
         initView();
         initData();
         initListener();
@@ -307,7 +307,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         }
         isAlive = false;
         super.onDestroy();
-        inflater = null;
+        mInflater = null;
         view = null;
         toGetWindowTokenView = null;
         progressDialog = null;
