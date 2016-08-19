@@ -101,11 +101,6 @@ public class VerificationCodeActivity extends BaseFragmentActivity
         findViewById(R.id.btnVerify, this);
     }
 
-    @Override
-    public boolean isRunning() {
-        return false;
-    }
-
     /**
      * 计算类型的验证码
      */

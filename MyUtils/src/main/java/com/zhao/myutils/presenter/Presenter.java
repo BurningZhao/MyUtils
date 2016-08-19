@@ -38,8 +38,4 @@ public interface Presenter {
      */
     boolean isAlive();
 
-    /**
-     * 是否在运行
-     */
-    boolean isRunning();
 }

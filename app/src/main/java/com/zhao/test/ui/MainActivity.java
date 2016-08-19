@@ -48,11 +48,6 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
         findViewById(R.id.validation_code, this);
     }
 
-    @Override
-    public boolean isRunning() {
-        return false;
-    }
-
     /**
      * Request the permission needed for the app for API>23
      */
