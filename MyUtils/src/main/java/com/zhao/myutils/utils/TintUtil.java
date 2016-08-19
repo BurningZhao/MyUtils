@@ -17,8 +17,9 @@ import java.lang.reflect.Field;
 public class TintUtil {
     /**
      * 给Drawable着色
-     * @param drawable 待着色的drawable
-     * @param colorStateList  ColorStateList,如 ColorStateList.valueOf(Color.RED)
+     *
+     * @param drawable       待着色的drawable
+     * @param colorStateList ColorStateList,如 ColorStateList.valueOf(Color.RED)
      * @return 完成着色的 Drawable
      */
     public static Drawable tintDrawable(Drawable drawable, ColorStateList colorStateList) {
@@ -28,9 +29,10 @@ public class TintUtil {
     }
 
     /**
-     *  给EditText光标着色
+     * 给EditText光标着色
+     *
      * @param editText EditText对象
-     * @param color Color,如Color.RED
+     * @param color    Color,如Color.RED
      */
     public static void tintCursorDrawable(EditText editText, int color) {
         try {
@@ -53,8 +55,8 @@ public class TintUtil {
                 return;
             }
 
-            Drawable tintDrawable  = tintDrawable(cursorDrawable, ColorStateList.valueOf(color));
-            Drawable[] drawables = new Drawable[] {tintDrawable, tintDrawable};
+            Drawable tintDrawable = tintDrawable(cursorDrawable, ColorStateList.valueOf(color));
+            Drawable[] drawables = new Drawable[]{tintDrawable, tintDrawable};
             fCursorDrawable.set(editor, drawables);
         } catch (Throwable ignored) {
         }

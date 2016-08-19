@@ -19,7 +19,7 @@ public class StringUtil {
      *
      * @param s string
      * @param trim boolean
-     * @return
+     * @return boolean
      */
     public static boolean isBlank(String s, boolean trim) {
         if (s == null) {

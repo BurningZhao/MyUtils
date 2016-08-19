@@ -28,8 +28,6 @@ public class MD5Util {
 
     }
 
-
-
     /**
      * 获得字符串的md5大写值
      *

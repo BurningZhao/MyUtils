@@ -10,6 +10,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * Description:AES加解密
  * BASE64是为了避免：javax.crypto.IllegalBlockSizeException: last block incomplete in decryption
+ *
  * @since 16/8/16
  */
 public class AESUtil {
