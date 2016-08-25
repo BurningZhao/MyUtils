@@ -36,13 +36,13 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     protected BaseFragmentActivity mContext = null;
     /**
      * 该Activity的界面，即contentView
-     * <p>
+     * <p/>
      * 不能在子类中创建
      */
     protected View view = null;
     /**
      * 布局解释器
-     * <p>
+     * <p/>
      * 不能在子类中创建
      */
     protected LayoutInflater mInflater = null;
@@ -73,7 +73,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     protected int exitAnim = R.anim.right_push_out;
 
     /**
-     * 权限回调Handler
+     * 权限回调listener
      */
     private PermissionListener mListener;
 
@@ -302,13 +302,13 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      * 请求权限
      *
      * @param permissions 权限列表
-     * @param handler     回调
+     * @param listener    回调
      */
-    protected void requestPermission(String[] permissions, PermissionListener handler) {
+    protected void requestPermission(String[] permissions, PermissionListener listener) {
         if (PermissionUtils.hasSelfPermissions(this, permissions)) {
-            handler.onGranted();
+            listener.onGranted();
         } else {
-            mListener = handler;
+            mListener = listener;
             ActivityCompat.requestPermissions(this, permissions, 001);
         }
     }
@@ -351,7 +351,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
 
     /**
      * 销毁并回收内存
-     * <p>
+     * <p/>
      * 子类如果要使用这个方法内用到的变量，应重写onDestroy方法并在super.onDestroy();前操作
      */
     @Override
