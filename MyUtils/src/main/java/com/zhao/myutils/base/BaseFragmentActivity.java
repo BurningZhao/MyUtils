@@ -2,19 +2,24 @@ package com.zhao.myutils.base;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.zhao.myutils.R;
 import com.zhao.myutils.manager.ThreadManager;
 import com.zhao.myutils.presenter.ActivityPresenter;
 import com.zhao.myutils.utils.KeyBoardUtils;
 import com.zhao.myutils.utils.LogUtil;
+import com.zhao.myutils.utils.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +71,11 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      * 退出时该界面动画,可在finish();前通过改变它的值来改变动画效果
      */
     protected int exitAnim = R.anim.right_push_out;
+
+    /**
+     * 权限回调Handler
+     */
+    private PermissionListener mListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -289,6 +299,57 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     }
 
     /**
+     * 请求权限
+     *
+     * @param permissions 权限列表
+     * @param handler     回调
+     */
+    protected void requestPermission(String[] permissions, PermissionListener handler) {
+        if (PermissionUtils.hasSelfPermissions(this, permissions)) {
+            handler.onGranted();
+        } else {
+            mListener = handler;
+            ActivityCompat.requestPermissions(this, permissions, 001);
+        }
+    }
+
+
+    /**
+     * 权限请求结果
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (mListener == null) {
+            return;
+        }
+
+        if (PermissionUtils.getTargetSdkVersion(this) < Build.VERSION_CODES.M
+                && !PermissionUtils.hasSelfPermissions(this, permissions)) {
+            mListener.onDenied();
+            return;
+        }
+
+        if (PermissionUtils.verifyPermissions(grantResults)) {
+            mListener.onGranted();
+        } else {
+            if (!PermissionUtils.shouldShowRequestPermissionRationale(this, permissions)) {
+                if (!mListener.onNeverAsk()) {
+                    Toast.makeText(this, R.string.give_permission_in_settings, Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                mListener.onDenied();
+            }
+        }
+    }
+
+    /**
      * 销毁并回收内存
      * <p>
      * 子类如果要使用这个方法内用到的变量，应重写onDestroy方法并在super.onDestroy();前操作
@@ -313,5 +374,30 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         progressDialog = null;
         mThreadNameList = null;
         mContext = null;
+    }
+
+    /**
+     * 权限回调接口
+     */
+    public abstract class PermissionListener {
+        /**
+         * 权限通过
+         */
+        public abstract void onGranted();
+
+        /**
+         * 权限拒绝
+         */
+        public void onDenied() {
+        }
+
+        /**
+         * 不再询问
+         *
+         * @return 如果要覆盖原有提示则返回true
+         */
+        public boolean onNeverAsk() {
+            return false;
+        }
     }
 }

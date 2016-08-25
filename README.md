@@ -101,6 +101,12 @@ to finish. Started and stopped directly by specific background tasks when needed
 [Proguard-Config](https://github.com/AndroidKnife/proguard-config)
 可以参考这个库,可以把该库中的相应lib对应的文件,直接copy文件中内容到proguard-rules.pro
 
+# android M 运行时权限
+- 简单适配6.0的运行时权限，参考了[XPermission](https://github.com/a5533348/XPermission);
+- [聊一聊 Android 6.0 的运行时权限](https://blog.coding.net/blog/understanding-marshmallow-runtime-permission),总结的很好，这次提交特殊权限未太细致，没有直接跳到具体的设置界面，即
+	1. SYSTEM_ALERT_WINDOW，设置悬浮窗，进行一些黑科技
+	2. WRITE_SETTINGS 修改系统设置
+
 # 参考学习的开源库
 [SystemBarTint](https://github.com/jgilfelt/SystemBarTint)
 系统栏管理器，我把它用在ZBLibrary的BaseActivity中实现了状态栏沉浸。

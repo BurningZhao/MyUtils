@@ -32,10 +32,9 @@ public class OpenSettingViewUtils {
     }
 
     /**
-     * 打开安装完成的App详情页面
-     * start InstalledAppDetails Activity
+     * 打开settings的App详情页面
      */
-    public static void openInstalledAppDetails(Context context, String packageName) {
+    public static void openSettingAppDetails(Context context, String packageName) {
         Intent intent = new Intent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);

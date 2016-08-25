@@ -11,10 +11,10 @@
         android:layout_height="wrap_content"
         android:text="@string/about_verification_code"/>
     <Button
-        android:id="@+id/telephony_manager"
+        android:id="@+id/test_permission_m"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/telephony_manager"/>
+        android:text="@string/test_permission_request"/>
     <EditText
         android:id="@+id/hide_imm"
         android:layout_width="match_parent"

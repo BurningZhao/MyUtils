@@ -46,6 +46,7 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
     @Override
     public void initListener() {
         findViewById(R.id.validation_code, this);
+        findViewById(R.id.test_permission_m, this);
     }
 
     /**
@@ -146,6 +147,11 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 Intent intent = new Intent(this, VerificationCodeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityWithAnimation(intent);
+                break;
+            case R.id.test_permission_m:
+                Intent testPermissionM = new Intent(this, PermissionTestActivity.class);
+                testPermissionM.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivityWithAnimation(testPermissionM);
                 break;
             default:
                 break;

@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">TestApp</string>
-    <string name="test_verification_code">Test verification code</string>
-    <string name="permissions_denied">Permissions denied.</string>
-    <string name="permissions_granted">Permissions granted</string>
-    <string name="about_verification_code">验证验相关</string>
-    <string name="telephony_manager">TelephonyManager相关</string>
+
+    <string name="test_permission_request">android M 运行时权限</string>
     <string name="hide_imm">点击EDIT_TEXT区域外隐藏键盘</string>
+
+    <string name="test_verification_code">Test verification code</string>
+    <string name="about_verification_code">验证验相关</string>
     <string name="verification_code">验证码</string>
     <string name="txt_finish">结果</string>
     <string name="compute_verification_code">计算类型验证码:</string>
@@ -16,4 +16,10 @@
     <string name="input_error">输入错误</string>
     <string name="error">错误</string>
     <string name="num_verification_code_type">数字类型验证码：</string>
+
+    <string name="camera">拍照</string>
+    <string name="call_to">打电话</string>
+
+    <string name="permissions_granted">Permissions granted</string>
+    <string name="permissions_denied">Permissions denied.</string>
 </resources>
