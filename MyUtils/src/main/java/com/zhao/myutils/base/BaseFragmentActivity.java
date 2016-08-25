@@ -40,7 +40,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      * <p>
      * 不能在子类中创建
      */
-    protected LayoutInflater inflater = null;
+    protected LayoutInflater mInflater = null;
     /**
      * Activity 是否alive
      */
@@ -52,11 +52,11 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     /**
      * activity退出时隐藏软键盘需要，需要在调用finish方法前赋值
      */
-    protected View toGetWindowTokenView = null;
+    protected View mWindowTokenView = null;
     /**
      * 线程名列表
      */
-    protected List<String> threadNameList;
+    protected List<String> mThreadNameList;
 
     /**
      * 退出时之前的界面进入动画,可在finish();前通过改变它的值来改变动画效果
@@ -71,9 +71,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
-        inflater = getLayoutInflater();
+        mInflater = getLayoutInflater();
         isAlive = true;
-        threadNameList = new ArrayList<>();
+        mThreadNameList = new ArrayList<>();
         setContentView(setLayoutResId());
     }
 
@@ -84,7 +84,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      */
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        view = inflater.inflate(layoutResID, null);
+        view = mInflater.inflate(layoutResID, null);
         initView();
         initData();
         initListener();
@@ -198,8 +198,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity
             return null;
         }
 
-        if (!threadNameList.contains(name)) {
-            threadNameList.add(name);
+        if (!mThreadNameList.contains(name)) {
+            mThreadNameList.add(name);
         }
         return handler;
     }
@@ -274,8 +274,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         runUiThread(new Runnable() {
             @Override
             public void run() {
-                if (toGetWindowTokenView != null) {
-                    KeyBoardUtils.hideSoftInput(mContext, toGetWindowTokenView);
+                if (mWindowTokenView != null) {
+                    KeyBoardUtils.hideSoftInput(mContext, mWindowTokenView);
                 }
                 if (enterAnim > 0 && exitAnim > 0) {
                     try {
@@ -296,7 +296,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     @Override
     protected void onDestroy() {
         dismissProgressDialog();
-        ThreadManager.getInstance().destroyThread(threadNameList);
+        ThreadManager.getInstance().destroyThread(mThreadNameList);
         if (view != null) {
             try {
                 view.destroyDrawingCache();
@@ -307,11 +307,11 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         }
         isAlive = false;
         super.onDestroy();
-        inflater = null;
+        mInflater = null;
         view = null;
-        toGetWindowTokenView = null;
+        mWindowTokenView = null;
         progressDialog = null;
-        threadNameList = null;
+        mThreadNameList = null;
         mContext = null;
     }
 }
