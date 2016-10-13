@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import java.util.List;
 public abstract class BaseCompatActivity extends AppCompatActivity
         implements ActivityPresenter {
     private static final String TAG = BaseCompatActivity.class.getSimpleName();
+    private static final int REQUEST_CODE = 1;
 
     protected BaseCompatActivity mContext = null;
     /**
@@ -336,7 +338,7 @@ public abstract class BaseCompatActivity extends AppCompatActivity
             listener.onGranted();
         } else {
             mListener = listener;
-            ActivityCompat.requestPermissions(this, permissions, 1);
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
         }
     }
 
@@ -351,27 +353,34 @@ public abstract class BaseCompatActivity extends AppCompatActivity
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (mListener == null) {
-            return;
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
         }
 
-        if (PermissionUtils.getTargetSdkVersion(this) < Build.VERSION_CODES.M
-                && !PermissionUtils.hasSelfPermissions(this, permissions)) {
-            mListener.onDenied();
-            return;
-        }
+        if (requestCode == REQUEST_CODE) {
+            if (mListener == null) {
+                return;
+            }
 
-        if (PermissionUtils.verifyPermissions(grantResults)) {
-            mListener.onGranted();
-        } else {
-            if (!PermissionUtils.shouldShowRequestPermissionRationale(this, permissions)) {
-                if (!mListener.onNeverAsk()) {
-                    Toast.makeText(this, R.string.give_permission_in_settings, Toast.LENGTH_SHORT).show();
-                }
-
-            } else {
+            if (PermissionUtils.getTargetSdkVersion(this) < Build.VERSION_CODES.M
+                    && !PermissionUtils.hasSelfPermissions(this, permissions)) {
                 mListener.onDenied();
+                return;
+            }
+
+            if (PermissionUtils.verifyPermissions(grantResults)) {
+                mListener.onGranted();
+            } else {
+                if (!PermissionUtils.shouldShowRequestPermissionRationale(this, permissions)) {
+                    if (!mListener.onNeverAsk()) {
+                        Toast.makeText(this, R.string.give_permission_in_settings, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    mListener.onDenied();
+                }
             }
         }
     }

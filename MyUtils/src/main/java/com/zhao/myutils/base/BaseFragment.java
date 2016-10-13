@@ -47,7 +47,7 @@ public abstract class BaseFragment<T extends Activity> extends Fragment
      */
     private int mPosition = -1;
     protected Bundle mBundle;
-    private boolean mIsCreateView = false;
+
     /**
      * 权限回调listener
      */
@@ -65,16 +65,13 @@ public abstract class BaseFragment<T extends Activity> extends Fragment
             parent.removeView(mContentView);
         }
 
-        mIsCreateView = true;
         return mContentView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (getUserVisibleHint()) {
-            initData();
-        }
+        initData();
     }
 
     /**
@@ -99,16 +96,6 @@ public abstract class BaseFragment<T extends Activity> extends Fragment
         mInflater = null;
         mContext = null;
     }
-
-    //此方法在控件初始化前调用，所以不能在此方法中直接操作控件会出现空指针
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser && mIsCreateView) {
-            initData();
-        }
-    }
-
 
     public View getContentView() {
         return mContentView;
