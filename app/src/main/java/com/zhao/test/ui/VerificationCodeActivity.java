@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zhao.myutils.base.BaseFragmentActivity;
+import com.zhao.myutils.base.BaseCompatActivity;
 import com.zhao.myutils.utils.BitmapUtils;
 import com.zhao.test.R;
 import com.zhao.test.config.Config;
@@ -21,7 +21,7 @@ import java.util.Random;
  * from
  * http://blog.csdn.net/zhoumushui/article/details/42023747
  */
-public class VerificationCodeActivity extends BaseFragmentActivity
+public class VerificationCodeActivity extends BaseCompatActivity
         implements View.OnClickListener {
     // 数字类型验证码
     private int[] numArray = new int[4];
@@ -271,7 +271,7 @@ public class VerificationCodeActivity extends BaseFragmentActivity
 
     @NonNull
     @Override
-    public BaseFragmentActivity getActivity() {
+    public BaseCompatActivity getActivity() {
         return this;
     }
 

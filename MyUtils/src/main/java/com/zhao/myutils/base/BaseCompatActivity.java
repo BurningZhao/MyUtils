@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +29,11 @@ import java.util.List;
  *
  * @since 2016/4/25
  */
-public abstract class BaseFragmentActivity extends FragmentActivity
+public abstract class BaseCompatActivity extends AppCompatActivity
         implements ActivityPresenter {
-    private static final String TAG = BaseFragmentActivity.class.getSimpleName();
+    private static final String TAG = BaseCompatActivity.class.getSimpleName();
 
-    protected BaseFragmentActivity mContext = null;
+    protected BaseCompatActivity mContext = null;
     /**
      * 该Activity的界面，即contentView
      * <p/>
@@ -336,7 +336,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
             listener.onGranted();
         } else {
             mListener = listener;
-            ActivityCompat.requestPermissions(this, permissions, 001);
+            ActivityCompat.requestPermissions(this, permissions, 1);
         }
     }
 

@@ -28,14 +28,14 @@ import com.zhao.myutils.utils.PermissionUtils;
 public abstract class BaseFragment<T extends Activity> extends Fragment
         implements FragmentPresenter {
     private static final String TAG = BaseFragment.class.getSimpleName();
-    private static final int REQUEST_CODE = 001;
+    private static final int REQUEST_CODE = 1;
 
     /**
      * 添加该Fragment的Activity
      * <p>
      * 不能在子类中创建
      */
-    protected BaseFragmentActivity mContext = null;
+    protected BaseCompatActivity mContext = null;
     protected LayoutInflater mInflater = null;
     private View mContentView;
     private boolean mIsAlive;

@@ -2,7 +2,7 @@ package com.zhao.myutils.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.zhao.myutils.base.BaseFragmentActivity;
+import com.zhao.myutils.base.BaseCompatActivity;
 
 /**
  * Description: Activity的公共逻辑接口
@@ -18,5 +18,5 @@ public interface ActivityPresenter extends Presenter {
      * 在非抽象Activity中 return this;
      */
     @NonNull
-    public BaseFragmentActivity getActivity();
+    public BaseCompatActivity getActivity();
 }

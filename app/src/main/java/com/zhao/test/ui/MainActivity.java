@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.zhao.myutils.base.BaseFragmentActivity;
+import com.zhao.myutils.base.BaseCompatActivity;
 import com.zhao.myutils.utils.KeyBoardUtils;
 import com.zhao.myutils.utils.PermissionCheckUtil;
 import com.zhao.test.R;
@@ -21,7 +21,7 @@ import java.util.List;
 
 import static com.zhao.test.R.layout.activity_main;
 
-public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
+public class MainActivity extends BaseCompatActivity implements View.OnClickListener {
 
     private static final int PERMISSIONS_REQUEST = 2;
 
@@ -136,7 +136,7 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
     }
 
     @Override
-    public BaseFragmentActivity getActivity() {
+    public BaseCompatActivity getActivity() {
         return this;
     }
 

@@ -8,19 +8,19 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Toast;
 
-import com.zhao.myutils.base.BaseFragmentActivity;
+import com.zhao.myutils.base.BaseCompatActivity;
 import com.zhao.myutils.utils.PermissionUtils;
 import com.zhao.test.R;
 
 /**
  * Permission M request demo
  */
-public class PermissionTestActivity extends BaseFragmentActivity
+public class PermissionTestActivity extends BaseCompatActivity
         implements View.OnClickListener {
 
     @NonNull
     @Override
-    public BaseFragmentActivity getActivity() {
+    public BaseCompatActivity getActivity() {
         return this;
     }
 
