@@ -2,17 +2,23 @@ package com.zhao.myutils.base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.zhao.myutils.R;
 import com.zhao.myutils.presenter.FragmentPresenter;
 import com.zhao.myutils.utils.LogUtil;
+import com.zhao.myutils.utils.PermissionUtils;
 
 /**
  * Fragment 的基类
@@ -22,6 +28,7 @@ import com.zhao.myutils.utils.LogUtil;
 public abstract class BaseFragment<T extends Activity> extends Fragment
         implements FragmentPresenter {
     private static final String TAG = BaseFragment.class.getSimpleName();
+    private static final int REQUEST_CODE = 001;
 
     /**
      * 添加该Fragment的Activity
@@ -31,22 +38,26 @@ public abstract class BaseFragment<T extends Activity> extends Fragment
     protected BaseFragmentActivity mContext = null;
     protected LayoutInflater mInflater = null;
     private View mContentView;
-    private boolean isAlive;
+    private boolean mIsAlive;
 
     /**
      * 该Fragment在Activity添加的所有Fragment中的位置，通过ARGUMENT_POSITION设置
-     *
+     * <p>
      * 只使用getPosition方法来获取position，保证position正确
      */
-    private int position = -1;
+    private int mPosition = -1;
     protected Bundle mBundle;
+    private boolean mIsCreateView = false;
+    /**
+     * 权限回调listener
+     */
+    private PermissionListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (mContentView == null) {
             mContentView = inflater.inflate(setLayoutResId(), container, false);
-            initData();
             initView();
             initListener();
         } else {
@@ -54,8 +65,50 @@ public abstract class BaseFragment<T extends Activity> extends Fragment
             parent.removeView(mContentView);
         }
 
+        mIsCreateView = true;
         return mContentView;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getUserVisibleHint()) {
+            initData();
+        }
+    }
+
+    /**
+     * 销毁并回收内存
+     * <p>
+     * 子类如果要使用这个方法内用到的变量，应重写onDestroy方法并在super.onDestroy();前操作
+     */
+    @Override
+    public void onDestroy() {
+        dismissProgressDialog();
+        if (mContentView != null) {
+            try {
+                mContentView.destroyDrawingCache();
+            } catch (Exception e) {
+                LogUtil.w(TAG, "onDestroy  view.destroyDrawingCache() \n" + e.getMessage());
+            }
+        }
+        super.onDestroy();
+
+        mIsAlive = false;
+        mContentView = null;
+        mInflater = null;
+        mContext = null;
+    }
+
+    //此方法在控件初始化前调用，所以不能在此方法中直接操作控件会出现空指针
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && mIsCreateView) {
+            initData();
+        }
+    }
+
 
     public View getContentView() {
         return mContentView;
@@ -82,18 +135,18 @@ public abstract class BaseFragment<T extends Activity> extends Fragment
      * 获取该Fragment在Activity添加的所有Fragment中的位置
      */
     public int getPosition() {
-        if (position < 0) {
+        if (mPosition < 0) {
             mBundle = getArguments();
             if (mBundle != null) {
-                position = mBundle.getInt(ARGUMENT_POSITION, position);
+                mPosition = mBundle.getInt(ARGUMENT_POSITION, mPosition);
             }
         }
-        return position;
+        return mPosition;
     }
 
     @Override
     public final boolean isAlive() {
-        return isAlive && mContext != null;// & ! isRemoving();导致finish，onDestroy内runUiThread不可用
+        return mIsAlive && mContext != null;// & ! isRemoving();导致finish，onDestroy内runUiThread不可用
     }
 
     /**
@@ -245,28 +298,81 @@ public abstract class BaseFragment<T extends Activity> extends Fragment
         });
     }
 
+
     /**
-     * 销毁并回收内存
-     * <p>
-     * 子类如果要使用这个方法内用到的变量，应重写onDestroy方法并在super.onDestroy();前操作
+     * 请求权限
+     *
+     * @param permissions 权限列表
+     * @param listener    回调
+     */
+    protected void requestPermission(String[] permissions, PermissionListener listener) {
+        if (PermissionUtils.hasSelfPermissions(getActivity(), permissions)) {
+            listener.onGranted();
+        } else {
+            mListener = listener;
+            ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_CODE);
+        }
+    }
+
+    /**
+     * 权限请求结果
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
      */
     @Override
-    public void onDestroy() {
-        dismissProgressDialog();
-        if (mContentView != null) {
-            try {
-                mContentView.destroyDrawingCache();
-            } catch (Exception e) {
-                LogUtil.w(TAG, "onDestroy  view.destroyDrawingCache() \n" + e.getMessage());
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_CODE) {
+            if (mListener == null) {
+                return;
+            }
+
+            if (PermissionUtils.getTargetSdkVersion(getActivity()) < Build.VERSION_CODES.M
+                    && !PermissionUtils.hasSelfPermissions(getActivity(), permissions)) {
+                mListener.onDenied();
+                return;
+            }
+
+            if (PermissionUtils.verifyPermissions(grantResults)) {
+                mListener.onGranted();
+            } else {
+                if (!PermissionUtils.shouldShowRequestPermissionRationale(getActivity(), permissions)) {
+                    if (!mListener.onNeverAsk()) {
+                        Toast.makeText(getActivity(), R.string.give_permission_in_settings, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    mListener.onDenied();
+                }
             }
         }
+    }
 
-        isAlive = false;
-        super.onDestroy();
+    /**
+     * 权限回调接口
+     */
+    public abstract class PermissionListener {
+        /**
+         * 权限通过
+         */
+        public abstract void onGranted();
 
-        mContentView = null;
-        mInflater = null;
+        /**
+         * 权限拒绝
+         */
+        public void onDenied() {
+        }
 
-        mContext = null;
+        /**
+         * 不再询问
+         *
+         * @return 如果要覆盖原有提示则返回true
+         */
+        public boolean onNeverAsk() {
+            return false;
+        }
     }
 }

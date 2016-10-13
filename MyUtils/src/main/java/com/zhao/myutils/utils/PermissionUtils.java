@@ -1,13 +1,16 @@
 package com.zhao.myutils.utils;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Process;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
 import android.support.v4.util.SimpleArrayMap;
@@ -21,6 +24,15 @@ import com.zhao.myutils.R;
  * @since 16/8/25
  */
 public final class PermissionUtils {
+
+    // Each permission in this list is a cherry-picked permission from a particular permission
+    // group. Granting a permission group enables access to all permissions in that group so we
+    // only need to check a single permission in each group.
+    // Note: This assumes that the app has correctly requested for all the relevant permissions
+    // in its Manifest file.
+    public static final String PHONE = Manifest.permission.CALL_PHONE;
+    public static final String CONTACTS = Manifest.permission.READ_CONTACTS;
+    public static final String LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
 
     // Map of dangerous permissions introduced in later framework versions.
     // Used to conditionally bypass permission-hold checks on older devices.
@@ -166,6 +178,14 @@ public final class PermissionUtils {
                 .setNegativeButton(android.R.string.cancel, null)
                 .setCancelable(false)
                 .show();
+    }
+
+    public static boolean hasAppOp(Context context, String appOp) {
+        final AppOpsManager appOpsManager =
+                (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+        final int mode = appOpsManager.checkOpNoThrow(appOp, Process.myUid(),
+                context.getPackageName());
+        return mode == AppOpsManager.MODE_ALLOWED;
     }
 
 }

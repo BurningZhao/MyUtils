@@ -39,7 +39,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      * <p/>
      * 不能在子类中创建
      */
-    protected View view = null;
+    protected View mContentView = null;
     /**
      * 布局解释器
      * <p/>
@@ -49,11 +49,11 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     /**
      * Activity 是否alive
      */
-    private boolean isAlive = false;
+    private boolean mIsAlive = false;
     /**
      * 进度弹窗
      */
-    protected ProgressDialog progressDialog = null;
+    protected ProgressDialog mProgressDialog = null;
     /**
      * activity退出时隐藏软键盘需要，需要在调用finish方法前赋值
      */
@@ -66,11 +66,11 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     /**
      * 退出时之前的界面进入动画,可在finish();前通过改变它的值来改变动画效果
      */
-    protected int enterAnim = R.anim.fade;
+    protected int mEnterAnim = R.anim.fade;
     /**
      * 退出时该界面动画,可在finish();前通过改变它的值来改变动画效果
      */
-    protected int exitAnim = R.anim.right_push_out;
+    protected int mExitAnim = R.anim.right_push_out;
 
     /**
      * 权限回调listener
@@ -82,7 +82,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         mContext = getActivity();
         mInflater = getLayoutInflater();
-        isAlive = true;
+        mIsAlive = true;
         mThreadNameList = new ArrayList<>();
         setContentView(setLayoutResId());
     }
@@ -94,7 +94,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      */
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        view = mInflater.inflate(layoutResID, null);
+        mContentView = mInflater.inflate(layoutResID, null);
         initView();
         initData();
         initListener();
@@ -142,20 +142,20 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         runUiThread(new Runnable() {
             @Override
             public void run() {
-                if (progressDialog == null) {
-                    progressDialog = new ProgressDialog(mContext);
+                if (mProgressDialog == null) {
+                    mProgressDialog = new ProgressDialog(mContext);
                 }
-                if (progressDialog.isShowing()) {
-                    progressDialog.dismiss();
+                if (mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
                 }
                 if (dialogTitle != null && !"".equals(dialogTitle.trim())) {
-                    progressDialog.setTitle(dialogTitle);
+                    mProgressDialog.setTitle(dialogTitle);
                 }
                 if (dialogMessage != null && !"".equals(dialogMessage.trim())) {
-                    progressDialog.setMessage(dialogMessage);
+                    mProgressDialog.setMessage(dialogMessage);
                 }
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.show();
             }
         });
     }
@@ -168,12 +168,12 @@ public abstract class BaseFragmentActivity extends FragmentActivity
             @Override
             public void run() {
                 //把判断写在runOnUiThread外面导致有时dismiss无效，可能不同线程判断progressDialog.isShowing()结果不一致
-                if (progressDialog == null || !progressDialog.isShowing()) {
+                if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                     LogUtil.w(TAG, "dismissProgressDialog  progressDialog == null"
                             + " || progressDialog.isShowing() == false >> return;");
                     return;
                 }
-                progressDialog.dismiss();
+                mProgressDialog.dismiss();
             }
         });
     }
@@ -216,7 +216,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
 
     @Override
     public final boolean isAlive() {
-        return isAlive && mContext != null;
+        return mIsAlive && mContext != null;
     }
 
     /**
@@ -287,15 +287,42 @@ public abstract class BaseFragmentActivity extends FragmentActivity
                 if (mWindowTokenView != null) {
                     KeyBoardUtils.hideSoftInput(mContext, mWindowTokenView);
                 }
-                if (enterAnim > 0 && exitAnim > 0) {
+                if (mEnterAnim > 0 && mExitAnim > 0) {
                     try {
-                        overridePendingTransition(enterAnim, exitAnim);
+                        overridePendingTransition(mEnterAnim, mExitAnim);
                     } catch (Exception e) {
                         LogUtil.e(TAG, "finish overridePendingTransition(enterAnim, exitAnim): " + e.getMessage());
                     }
                 }
             }
         });
+    }
+
+    /**
+     * 销毁并回收内存
+     * <p>
+     * 子类如果要使用这个方法内用到的变量，应重写onDestroy方法并在super.onDestroy();前操作
+     */
+    @Override
+    protected void onDestroy() {
+        dismissProgressDialog();
+        ThreadManager.getInstance().destroyThread(mThreadNameList);
+        if (mContentView != null) {
+            try {
+                mContentView.destroyDrawingCache();
+            } catch (Exception e) {
+                Log.w(TAG, "onDestroy  try { view.destroyDrawingCache();" +
+                        " >> } catch (Exception e) {\n" + e.getMessage());
+            }
+        }
+        super.onDestroy();
+        mIsAlive = false;
+        mInflater = null;
+        mContentView = null;
+        mWindowTokenView = null;
+        mProgressDialog = null;
+        mThreadNameList = null;
+        mContext = null;
     }
 
     /**
@@ -347,33 +374,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity
                 mListener.onDenied();
             }
         }
-    }
-
-    /**
-     * 销毁并回收内存
-     * <p/>
-     * 子类如果要使用这个方法内用到的变量，应重写onDestroy方法并在super.onDestroy();前操作
-     */
-    @Override
-    protected void onDestroy() {
-        dismissProgressDialog();
-        ThreadManager.getInstance().destroyThread(mThreadNameList);
-        if (view != null) {
-            try {
-                view.destroyDrawingCache();
-            } catch (Exception e) {
-                Log.w(TAG, "onDestroy  try { view.destroyDrawingCache();" +
-                        " >> } catch (Exception e) {\n" + e.getMessage());
-            }
-        }
-        isAlive = false;
-        super.onDestroy();
-        mInflater = null;
-        view = null;
-        mWindowTokenView = null;
-        progressDialog = null;
-        mThreadNameList = null;
-        mContext = null;
     }
 
     /**
