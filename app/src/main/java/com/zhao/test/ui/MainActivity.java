@@ -38,6 +38,7 @@ public class MainActivity extends BaseCompatActivity implements View.OnClickList
     @Override
     public void initData() {
         // Marshmallow+
+        // 初始化时请求程序需要的所有的Dangerous Permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions();
         }
@@ -55,10 +56,10 @@ public class MainActivity extends BaseCompatActivity implements View.OnClickList
     private void requestPermissions() {
         final ArrayList<String> permissionsList = new ArrayList<>();
         // add permission ->eg:
+        // Location
         addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION);
-        addPermission(permissionsList, Manifest.permission.ACCESS_COARSE_LOCATION);
+        //  Phone
         addPermission(permissionsList, Manifest.permission.READ_PHONE_STATE);
-        addPermission(permissionsList, Manifest.permission.KILL_BACKGROUND_PROCESSES);
         PermissionCheckUtil.isRequestPermissions(this, permissionsList, PERMISSIONS_REQUEST);
     }
 

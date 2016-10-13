@@ -106,6 +106,7 @@ to finish. Started and stopped directly by specific background tasks when needed
 - [聊一聊 Android 6.0 的运行时权限](https://blog.coding.net/blog/understanding-marshmallow-runtime-permission),总结的很好，这次提交特殊权限未太细致，没有直接跳到具体的设置界面，即
 	1. SYSTEM_ALERT_WINDOW，设置悬浮窗，进行一些黑科技
 	2. WRITE_SETTINGS 修改系统设置
+- [Android 6.0系统中权限问题调用 - Permission in Android M](https://cankingapp.github.io/2016/03/18/android-permission/)
 
 # 参考学习的开源库
 [SystemBarTint](https://github.com/jgilfelt/SystemBarTint)
