@@ -1,6 +1,7 @@
 package com.zhao.test.ui;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -53,9 +54,13 @@ public class PermissionTestActivity extends BaseCompatActivity
                 requestPermission(new String[]{Manifest.permission.CAMERA}, new PermissionListener() {
                     @Override
                     public void onGranted() {
-                        Intent intent = new Intent(); //调用照相机
-                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivity(intent);
+                        try {
+                            Intent intent = new Intent(); //调用照相机
+                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivity(intent);
+                        } catch (ActivityNotFoundException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override

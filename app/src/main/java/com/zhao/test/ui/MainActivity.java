@@ -60,6 +60,8 @@ public class MainActivity extends BaseCompatActivity implements View.OnClickList
         addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION);
         //  Phone
         addPermission(permissionsList, Manifest.permission.READ_PHONE_STATE);
+        // sdcard
+        addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         PermissionCheckUtil.isRequestPermissions(this, permissionsList, PERMISSIONS_REQUEST);
     }
 
